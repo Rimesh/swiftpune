@@ -37,6 +37,16 @@
   --bubble-green-tint:  #E5F1D2;
   --bubble-orange-tint: #FBE2CC;
 
+  /* ----- Text on tint ---------------------------------------------------
+     The vivid brand colours above are sized for graphics — dots, rules,
+     fills — where 3:1 is the bar and they all clear it. Set as small text
+     on their own tint they land between 2.9:1 and 4.2:1, so chips and mono
+     labels use these deeper cuts of the same hues, which clear 4.5:1. Same
+     palette, same hues; only the value drops. */
+  --accent-text: #B02845;
+  --green-text:  #4A6E14;
+  --violet-text: #6944C4;
+
   /* ----- Roles --------------------------------------------------------- */
   --text-strong: var(--ink);
   --text:        var(--ink-soft);
