@@ -32,7 +32,22 @@ and the number never changes:
 Each programme section is a featured **latest** edition followed by a log of
 every earlier one. To add an event:
 
-1. Drop three photos in that programme's folder as `01`, `02`, `03`.
+1. Drop three photos in that programme's folder as `01`, `02`, `03`, then
+   size them. Originals cap at 1280px wide, with `-1024` and `-640`
+   variants beside them for `srcset`:
+
+   ```sh
+   cd assets/Events/<programme>/<slug>
+   for n in 01 02 03; do
+     sips --resampleWidth 1280 $n.jpg --out $n.jpg          # only if wider
+     sips --resampleWidth 1024 $n.jpg --out $n-1024.jpg
+     sips --resampleWidth 640  $n.jpg --out $n-640.jpg
+   done
+   ```
+
+   Use the file's real pixel width as the largest `srcset` descriptor —
+   if an original is already under 1280 it stays that size, and the
+   descriptor should say so rather than claiming `1280w`.
 2. Demote the current featured edition into a new `<li class="edition">`
    row at the top of the log, keeping its photos, write-up and facts.
    Remove its `edition--latest` class and give it a `<details>` wrapper.
