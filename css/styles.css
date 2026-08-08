@@ -643,9 +643,9 @@ a { color: inherit; text-decoration: none; }
   border-radius: var(--r-pill);
   margin-bottom: 0.3rem;
 }
-.work-card__tag--meetup   { color: var(--accent-deep); background: var(--accent-tint); }
-.work-card__tag--party    { color: var(--bubble-violet); background: #E6DEFA; }
-.work-card__tag--outreach { color: #5E8C1A; background: var(--bubble-green-tint); }
+.work-card__tag--meetup   { color: var(--accent-text); background: var(--accent-tint); }
+.work-card__tag--party    { color: var(--violet-text); background: #E6DEFA; }
+.work-card__tag--outreach { color: var(--green-text); background: var(--bubble-green-tint); }
 
 .work-card__title {
   font-family: var(--font-display);
@@ -677,7 +677,7 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.95rem;
-  color: var(--accent);
+  color: var(--accent-text);
   transition: gap var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 .work-card__link:hover .work-card__cta { gap: 0.7rem; color: var(--accent-deep); }
@@ -877,16 +877,21 @@ a { color: inherit; text-decoration: none; }
   margin-top: var(--s-8);
   padding-top: var(--s-6);
   border-top: 1px solid var(--hairline);
-  /* Each programme tints its own rail; defaults to the house coral. */
-  --edition-node: var(--accent);
+  /* Each programme tints its own rail; defaults to the house coral. The
+     dot is a graphic and can carry the vivid hue; the key and chip are
+     small text and take the deeper cut that clears 4.5:1. */
+  --edition-dot:  var(--accent);
+  --edition-ink:  var(--accent-text);
   --edition-tint: var(--accent-tint);
 }
 .section--outreach .editions {
-  --edition-node: #5E8C1A;
+  --edition-dot:  #5E8C1A;
+  --edition-ink:  var(--green-text);
   --edition-tint: var(--bubble-green-tint);
 }
 .section--wwdc .editions {
-  --edition-node: var(--bubble-violet);
+  --edition-dot:  var(--bubble-violet);
+  --edition-ink:  var(--violet-text);
   --edition-tint: #E6DEFA;
 }
 
@@ -969,13 +974,13 @@ a { color: inherit; text-decoration: none; }
     background var(--dur-fast) var(--ease-out);
 }
 .edition--latest .edition__node {
-  background: var(--edition-node);
-  border-color: var(--edition-node);
+  background: var(--edition-dot);
+  border-color: var(--edition-dot);
   box-shadow: 0 0 0 4px var(--edition-tint);
 }
 .edition__summary:hover .edition__node,
 .edition__box[open] .edition__node {
-  border-color: var(--edition-node);
+  border-color: var(--edition-dot);
   background: var(--edition-tint);
 }
 
@@ -991,12 +996,12 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--ink-faint);
+  color: var(--ink-mute);
   transition: color var(--dur-fast) var(--ease-out);
 }
-.edition--latest .edition__key { color: var(--edition-node); }
+.edition--latest .edition__key { color: var(--edition-ink); }
 .edition__summary:hover .edition__key,
-.edition__box[open] .edition__key { color: var(--edition-node); }
+.edition__box[open] .edition__key { color: var(--edition-ink); }
 
 .edition__name {
   font-family: var(--font-display);
@@ -1010,7 +1015,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--edition-node);
+  color: var(--edition-ink);
   background: var(--edition-tint);
   padding: 0.16rem 0.5rem;
   border-radius: var(--r-pill);
@@ -1032,18 +1037,23 @@ a { color: inherit; text-decoration: none; }
     transform var(--dur-fast) var(--ease-out),
     color var(--dur-fast) var(--ease-out);
 }
-.edition__summary:hover .edition__chev { color: var(--edition-node); }
+.edition__summary:hover .edition__chev { color: var(--edition-dot); }
 .edition__box[open] .edition__chev {
   transform: rotate(180deg);
-  color: var(--edition-node);
+  color: var(--edition-dot);
 }
 
-/* ----- Expanded edition ----- */
+/* ----- Expanded edition -----
+   Photos run the full width as a contact sheet, with the write-up and
+   facts side by side beneath. Rows are collapsed by default, so an
+   expanded row costs the page nothing — which means this can be sized
+   for looking at the photos rather than for saving space. It also keeps
+   one layout at every width instead of a desktop/mobile pair, and never
+   strands empty space beside a short photo strip however long a future
+   write-up runs. */
 .edition__detail {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: var(--s-6);
-  align-items: start;
+  gap: var(--s-5);
   margin: var(--s-2) 0 var(--s-6) calc(11px + var(--s-4));
   animation: edition-in var(--dur-mid) var(--ease-out) both;
 }
@@ -1055,7 +1065,7 @@ a { color: inherit; text-decoration: none; }
 .edition__shots {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--s-2);
+  gap: var(--s-3);
 }
 .edition__shots img {
   display: block;
@@ -1068,14 +1078,23 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--hairline);
 }
 
+/* Write-up beside the facts, so neither runs to an unreadable measure
+   across the full width of the contact sheet above. */
+.edition__text {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--s-6);
+  align-items: start;
+}
 .edition__text p {
   color: var(--text);
   font-size: 1rem;
   line-height: 1.6;
+  max-width: 62ch;
 }
 .edition__facts {
   list-style: none;
-  margin: var(--s-5) 0 0;
+  margin: 0;
   padding: 0;
   border-top: 1px solid var(--hairline);
 }
@@ -1216,7 +1235,7 @@ a { color: inherit; text-decoration: none; }
   gap: 0.35rem;
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
   padding: 0.3rem 0.65rem;
   margin-top: 2px;
@@ -1289,7 +1308,7 @@ a { color: inherit; text-decoration: none; }
   gap: 0.35rem;
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
   margin-top: 4px;
 }
@@ -1866,9 +1885,6 @@ html.js .reveal.is-visible .reveal-up {
   .work-card--wide { grid-column: span 2; }
   .work-card--tall { grid-column: span 1; }
 
-  /* Expanded editions stack their photo strip above the write-up. */
-  .edition__detail { grid-template-columns: 1fr; gap: var(--s-5); }
-
   /* Initiative features stack: media on top, copy below (flip resets). */
   .initiative { grid-template-columns: 1fr; gap: var(--s-6); }
   .initiative--flip .initiative__media { order: 0; }
@@ -1941,6 +1957,7 @@ html.js .reveal.is-visible .reveal-up {
   }
   .edition__meta { padding-top: 0.25rem; }
   .edition__detail { margin-left: calc(11px + var(--s-3)); }
+  .edition__text { grid-template-columns: 1fr; gap: var(--s-4); }
   .edition__facts li { grid-template-columns: 1fr; gap: 2px; }
 
   .btn { padding: 0.85rem 1.3rem; font-size: 0.98rem; }
