@@ -1044,16 +1044,17 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ----- Expanded edition -----
-   Photos run the full width as a contact sheet, with the write-up and
-   facts side by side beneath. Rows are collapsed by default, so an
-   expanded row costs the page nothing — which means this can be sized
-   for looking at the photos rather than for saving space. It also keeps
-   one layout at every width instead of a desktop/mobile pair, and never
-   strands empty space beside a short photo strip however long a future
-   write-up runs. */
+   Same shape as an .initiative feature, one size down: the shared photo
+   gallery beside the write-up, both centred on each other so whichever
+   column is shorter reads as deliberate rather than ragged. Using the
+   same gallery here as in the features means one photo component across
+   the whole site instead of two. Kept smaller than a feature's gallery
+   so the archive never outweighs the edition it sits under. */
 .edition__detail {
   display: grid;
-  gap: var(--s-5);
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(var(--s-5), 4vw, var(--s-7));
+  align-items: center;
   margin: var(--s-2) 0 var(--s-6) calc(11px + var(--s-4));
   animation: edition-in var(--dur-mid) var(--ease-out) both;
 }
@@ -1062,39 +1063,28 @@ a { color: inherit; text-decoration: none; }
   to   { opacity: 1; transform: none; }
 }
 
-.edition__shots {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--s-3);
-}
-.edition__shots img {
-  display: block;
-  width: 100%;
-  /* 4:3 rather than square — event photos are landscape group shots and a
-     square crop cuts people out of the edges. */
+/* Frame for the gallery — the .gallery inside is absolutely positioned,
+   so this carries the ratio and the rounding. A notch softer than
+   .initiative__media's radius and shadow, to sit below it. */
+.edition__media {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg);
   border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-1);
 }
 
-/* Write-up beside the facts, so neither runs to an unreadable measure
-   across the full width of the contact sheet above. */
-.edition__text {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: var(--s-6);
-  align-items: start;
-}
 .edition__text p {
   color: var(--text);
   font-size: 1rem;
   line-height: 1.6;
-  max-width: 62ch;
+  max-width: 56ch;
 }
 .edition__facts {
   list-style: none;
-  margin: 0;
+  margin: var(--s-5) 0 0;
   padding: 0;
   border-top: 1px solid var(--hairline);
 }
@@ -1885,6 +1875,10 @@ html.js .reveal.is-visible .reveal-up {
   .work-card--wide { grid-column: span 2; }
   .work-card--tall { grid-column: span 1; }
 
+  /* Expanded editions stack like the features they mirror. */
+  .edition__detail { grid-template-columns: 1fr; gap: var(--s-5); align-items: start; }
+  .edition__media { aspect-ratio: 16 / 10; }
+
   /* Initiative features stack: media on top, copy below (flip resets). */
   .initiative { grid-template-columns: 1fr; gap: var(--s-6); }
   .initiative--flip .initiative__media { order: 0; }
@@ -1957,7 +1951,7 @@ html.js .reveal.is-visible .reveal-up {
   }
   .edition__meta { padding-top: 0.25rem; }
   .edition__detail { margin-left: calc(11px + var(--s-3)); }
-  .edition__text { grid-template-columns: 1fr; gap: var(--s-4); }
+  .edition__media { aspect-ratio: 4 / 3; }
   .edition__facts li { grid-template-columns: 1fr; gap: 2px; }
 
   .btn { padding: 0.85rem 1.3rem; font-size: 0.98rem; }
