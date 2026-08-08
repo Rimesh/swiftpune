@@ -479,15 +479,16 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   isolation: isolate;
 }
+/* Alternating warm bands. The three programme sections sit next to each
+   other in the middle, so the rhythm carries straight through them. */
 .section--work       { background: var(--surface-1); }
 .section--meetups    { background: var(--surface-0); }
-.section--s001       { background: var(--surface-1); }
-.section--recent     { background: var(--surface-0); }
 .section--outreach   { background: var(--surface-1); }
 .section--wwdc       { background: var(--surface-0); }
-.section--first      { background: var(--surface-1); }
-.section--team       { background: var(--surface-0); }
-.section--sponsors   { background: var(--surface-1); }
+.section--attend     { background: var(--surface-1); }
+.section--first      { background: var(--surface-0); }
+.section--team       { background: var(--surface-1); }
+.section--sponsors   { background: var(--surface-0); }
 
 .section-head { margin-bottom: var(--s-8); }
 .section-head--center { text-align: center; margin-inline: auto; max-width: 64ch; }
@@ -506,6 +507,28 @@ a { color: inherit; text-decoration: none; }
   gap: var(--s-5);
   margin-top: var(--s-8);
 }
+
+/* The programme row is a fixed three-up that never grows with the event
+   count. auto-fit reflows it to 2+1 then 1 on its own, so it needs no
+   breakpoint of its own — and it would absorb a fourth programme if one
+   ever appears. Doubled class keeps it ahead of the .work-grid rules in
+   the media queries at the bottom of this file. */
+.work-grid.work-grid--programs {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 265px), 1fr));
+}
+.work-grid--programs .work-card--tall { grid-column: auto; }
+/* Fixed-ratio media so all three photos line up regardless of how long
+   each blurb runs; the count line and CTA then sit on a shared baseline
+   at the bottom of every card. */
+.work-grid--programs .work-card--tall .work-card__media {
+  flex: 0 0 auto;
+  aspect-ratio: 16 / 10;
+  min-height: 0;
+}
+.work-grid--programs .work-card__body { flex: 1 1 auto; }
+.work-grid--programs .work-card__meta { margin-top: 0.35rem; }
+.work-grid--programs .work-card__meta strong { color: var(--ink); font-weight: 700; }
+.work-grid--programs .work-card__cta { margin-top: auto; padding-top: var(--s-3); }
 
 .work-card {
   background: var(--surface-2);
@@ -673,6 +696,18 @@ a { color: inherit; text-decoration: none; }
 }
 .initiative--flip .initiative__media { order: 2; }
 
+/* Inside a programme section the section head already carries the h2, so
+   the featured edition's title steps down a size to keep the hierarchy
+   readable: section > featured edition > body. */
+.display--feature {
+  font-size: clamp(1.75rem, 2.2vw + 0.9rem, 2.75rem);
+}
+.section--program .initiative { margin-top: var(--s-7); }
+.section--program .recap { margin-top: var(--s-8); }
+/* When the run-sheet carries its own label, the label owns the gap. */
+.log-label--recap { margin-top: var(--s-8); }
+.section--program .log-label--recap + .recap { margin-top: 0; }
+
 .initiative__media {
   position: relative;
   isolation: isolate;
@@ -694,6 +729,10 @@ a { color: inherit; text-decoration: none; }
 }
 .initiative__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .initiative__media .work-ph { opacity: 0.4; }
+/* Tint for a feature whose photos haven't been dropped in yet, so the
+   slot reads as "awaiting photos" rather than as a broken image. */
+.initiative__media--green { background: var(--bubble-green-tint); }
+.initiative__media--green .work-ph { color: #5E8C1A; }
 
 .initiative__copy { max-width: 36rem; }
 .initiative__copy .comment-eyebrow { margin-bottom: var(--s-3); }
@@ -823,6 +862,232 @@ a { color: inherit; text-decoration: none; }
   .recap__gallery { aspect-ratio: 4 / 3; }
 }
 
+/* ---------- 9d. Programme edition logs ------------------------------- */
+
+/* Every programme section closes with its own log: one row per edition,
+   newest first, hanging off a vertical rail with a commit-style node.
+   The site already borrows this idiom elsewhere (// first.commit,
+   // hosts.history, the S00N ids), so the archive reads as `git log`
+   for that programme rather than a generic accordion — the featured
+   edition above is the tip of the rail, and everything below expands in
+   place. Adding an event costs one <li>, so the page grows by a row
+   instead of by a screen. That is the whole scaling story. */
+
+.editions {
+  margin-top: var(--s-8);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--hairline);
+  /* Each programme tints its own rail; defaults to the house coral. */
+  --edition-node: var(--accent);
+  --edition-tint: var(--accent-tint);
+}
+.section--outreach .editions {
+  --edition-node: #5E8C1A;
+  --edition-tint: var(--bubble-green-tint);
+}
+.section--wwdc .editions {
+  --edition-node: var(--bubble-violet);
+  --edition-tint: #E6DEFA;
+}
+
+/* Shared small mono label for the run-sheet and the log headings. */
+.log-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--ink-mute);
+  letter-spacing: 0.02em;
+  margin-bottom: var(--s-4);
+}
+
+.editions__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* The rail is drawn per row, from this node down to the next, so the
+   last entry simply ends — no masking against the section background. */
+.edition { position: relative; }
+.edition::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1.85rem;
+  bottom: 0;
+  width: 1px;
+  background: var(--hairline);
+}
+.edition:last-child::before { display: none; }
+.edition + .edition { border-top: 1px solid var(--hairline-2); }
+
+.edition__box { border: 0; }
+
+/* WebKit silently drops a <summary>'s disclosure behaviour if it is given
+   any display other than the default, so the summary stays a plain block
+   and the grid lives on .edition__row inside it. Do not move it back. */
+.edition__summary {
+  display: block;
+  padding: var(--s-4) 0;
+  cursor: pointer;
+  list-style: none;
+}
+.edition__summary::-webkit-details-marker { display: none; }
+.edition__summary::marker { content: ""; }
+.edition__summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+  border-radius: var(--r-sm);
+}
+
+.edition__row {
+  display: grid;
+  grid-template-columns: 11px 1fr auto 20px;
+  grid-template-areas: "node head meta chev";
+  align-items: start;
+  gap: var(--s-4);
+}
+
+/* The latest edition is shown in full above, so its row is a marker
+   rather than a control: no chevron, no pointer, no expansion. */
+.edition--latest .edition__summary { cursor: default; }
+.edition--latest .edition__row {
+  grid-template-columns: 11px 1fr auto;
+  grid-template-areas: "node head meta";
+}
+
+.edition__node {
+  grid-area: node;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: var(--surface-2);
+  border: 2px solid var(--ink-faint);
+  margin-top: 0.42rem;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+.edition--latest .edition__node {
+  background: var(--edition-node);
+  border-color: var(--edition-node);
+  box-shadow: 0 0 0 4px var(--edition-tint);
+}
+.edition__summary:hover .edition__node,
+.edition__box[open] .edition__node {
+  border-color: var(--edition-node);
+  background: var(--edition-tint);
+}
+
+.edition__head {
+  grid-area: head;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.7rem;
+}
+.edition__key {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.edition--latest .edition__key { color: var(--edition-node); }
+.edition__summary:hover .edition__key,
+.edition__box[open] .edition__key { color: var(--edition-node); }
+
+.edition__name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.edition__chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--edition-node);
+  background: var(--edition-tint);
+  padding: 0.16rem 0.5rem;
+  border-radius: var(--r-pill);
+}
+.edition__meta {
+  grid-area: meta;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-mute);
+  padding-top: 0.2rem;
+}
+.edition__chev {
+  grid-area: chev;
+  display: flex;
+  justify-content: flex-end;
+  color: var(--ink-faint);
+  margin-top: 0.15rem;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.edition__summary:hover .edition__chev { color: var(--edition-node); }
+.edition__box[open] .edition__chev {
+  transform: rotate(180deg);
+  color: var(--edition-node);
+}
+
+/* ----- Expanded edition ----- */
+.edition__detail {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--s-6);
+  align-items: start;
+  margin: var(--s-2) 0 var(--s-6) calc(11px + var(--s-4));
+  animation: edition-in var(--dur-mid) var(--ease-out) both;
+}
+@keyframes edition-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.edition__shots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+}
+.edition__shots img {
+  display: block;
+  width: 100%;
+  /* 4:3 rather than square — event photos are landscape group shots and a
+     square crop cuts people out of the edges. */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--r-md);
+  border: 1px solid var(--hairline);
+}
+
+.edition__text p {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.edition__facts {
+  list-style: none;
+  margin: var(--s-5) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+.edition__facts li {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: var(--s-3);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--hairline);
+  align-items: baseline;
+}
+
 /* ---------- 10. Meetups ---------------------------------------------- */
 
 .meetups {
@@ -882,7 +1147,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- 10b. Recent meetup (S002 recap) ------------------------- */
 
-.section--recent .section-head { margin-bottom: var(--s-7); }
+.section--program .section-head { margin-bottom: var(--s-7); }
 
 .recap {
   display: grid;
@@ -1601,6 +1866,9 @@ html.js .reveal.is-visible .reveal-up {
   .work-card--wide { grid-column: span 2; }
   .work-card--tall { grid-column: span 1; }
 
+  /* Expanded editions stack their photo strip above the write-up. */
+  .edition__detail { grid-template-columns: 1fr; gap: var(--s-5); }
+
   /* Initiative features stack: media on top, copy below (flip resets). */
   .initiative { grid-template-columns: 1fr; gap: var(--s-6); }
   .initiative--flip .initiative__media { order: 0; }
@@ -1657,6 +1925,24 @@ html.js .reveal.is-visible .reveal-up {
   .initiative__facts li { grid-template-columns: 1fr; gap: 2px; }
   .initiative__media { aspect-ratio: 4 / 3; }
 
+  /* Edition rows drop the date onto a second line beside the rail. */
+  .edition__row {
+    grid-template-columns: 11px 1fr 20px;
+    grid-template-areas:
+      "node head chev"
+      "node meta chev";
+    gap: 0 var(--s-3);
+  }
+  .edition--latest .edition__row {
+    grid-template-columns: 11px 1fr;
+    grid-template-areas:
+      "node head"
+      "node meta";
+  }
+  .edition__meta { padding-top: 0.25rem; }
+  .edition__detail { margin-left: calc(11px + var(--s-3)); }
+  .edition__facts li { grid-template-columns: 1fr; gap: 2px; }
+
   .btn { padding: 0.85rem 1.3rem; font-size: 0.98rem; }
   .bubble--first { width: 320px; height: 320px; }
 }
@@ -1675,6 +1961,11 @@ html.js .reveal.is-visible .reveal-up {
     transition: none !important;
   }
   .btn, .onboard__num, .crew__member, .work-card {
+    transition: none !important;
+  }
+  /* Editions still expand — they just do it without the slide-in. */
+  .edition__detail { animation: none !important; }
+  .edition__node, .edition__chev, .edition__key {
     transition: none !important;
   }
   /* No auto-advance or progress animation; the active dot just shows filled.

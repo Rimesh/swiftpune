@@ -6,6 +6,21 @@
       if (!location.search.includes("static")) {
         document.documentElement.classList.add("js");
       }
+      /* Event photos get dropped into assets/Events/… after the markup for
+         a new edition goes up, so a slot can legitimately sit empty for a
+         few days. Hide the missing image so the tinted "photos coming"
+         placeholder behind it shows through, instead of a torn-image icon
+         and sprawling alt text. Must be registered here rather than in
+         main.js — deferred scripts run after images have already failed. */
+      document.addEventListener(
+        "error",
+        function (e) {
+          if (e.target && e.target.tagName === "IMG") {
+            e.target.style.visibility = "hidden";
+          }
+        },
+        true
+      );
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#FAF7F2" />
@@ -71,6 +86,7 @@
         <nav class="site-nav__links" aria-label="Sections">
           <a href="#work">Our work</a>
           <a href="#meetups">Meetups</a>
+          <a href="#outreach">Students</a>
           <a href="#core-team">Core team</a>
           <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener" class="nav-cta">
             Join WhatsApp
@@ -94,7 +110,9 @@
         <nav aria-label="Mobile sections">
           <a href="#work">Our work</a>
           <a href="#meetups">Meetups</a>
-          <a href="#recent">Last meetup</a>
+          <a href="#outreach">Student outreach</a>
+          <a href="#wwdc">Community nights</a>
+          <a href="#attend">Turning up</a>
           <a href="#first-time">First time?</a>
           <a href="#core-team">Core team</a>
           <a href="#sponsors">Sponsors</a>
@@ -159,111 +177,89 @@
       </section>
 
       <!-- ===========================================================
-           Our work — the real log of what SwiftPune has actually run.
-           A bento of concrete initiatives (meetups, campus outreach,
-           community nights) with image-ready photo placeholders.
+           Our work — the three programmes we run, on repeat.
+           -----------------------------------------------------------
+           This row is deliberately FIXED at three cards: one per
+           programme, not one per event. Individual events live in the
+           logs inside each programme section below, so this grid never
+           grows and the page never turns into a wall of tiles. When a
+           new event happens, only the count line on a card changes.
            =========================================================== -->
       <section class="section section--work reveal" id="work">
         <div class="container">
           <header class="section-head">
-            <p class="comment-eyebrow">// ls ./events</p>
+            <p class="comment-eyebrow">// ls ./programs</p>
             <h2 class="display">
               Less talk. Here's the <span class="ink">work</span>.
             </h2>
             <p class="lead">
-              No roadmap theatre, no vague mission statements — just the
-              real log. Every meetup, campus session, and community night
-              we've actually run so far. Photos are going up as we sort
-              through them.
+              No roadmap theatre, no vague mission statements — three
+              things we run on repeat, and the full log of every one
+              we've actually held. Talks for working developers, Swift
+              taken onto campuses, and one night a year for the keynote.
             </p>
           </header>
 
-          <div class="work-grid">
-            <!-- S002 — flagship meetup (wide feature → full recap below) -->
-            <article class="work-card work-card--wide reveal-up" style="--i:0">
-              <a class="work-card__link" href="#recent">
+          <div class="work-grid work-grid--programs">
+            <article class="work-card work-card--tall reveal-up" style="--i:0">
+              <a class="work-card__link" href="#meetups">
                 <span class="work-card__media work-card__media--teal">
                   <img src="assets/Events/S002/01.jpeg" alt="SwiftPune S002 meetup at Xplor Technologies" loading="lazy" />
                 </span>
                 <span class="work-card__body">
-                  <span class="work-card__tag work-card__tag--meetup">S002 · Meetup</span>
-                  <span class="work-card__title">Three talks and a hands-on lab.</span>
-                  <span class="work-card__meta">Xplor Technologies, Kharadi · Mar 8, 2026</span>
+                  <span class="work-card__tag work-card__tag--meetup">Meetups</span>
+                  <span class="work-card__title">Talks for people already shipping.</span>
                   <span class="work-card__desc">
-                    App discoverability, CI/CD with Fastlane, a real-world
-                    Swift 6 migration, and a lab on decomposing Apple-platform
-                    designs. Every talk recorded.
+                    Half a Saturday at a host company's office. Three
+                    20-minute talks, a hands-on lab, every talk recorded.
                   </span>
+                  <span class="work-card__meta"><strong>2 editions</strong> · latest Mar 2026</span>
                   <span class="work-card__cta">
-                    Read the full recap
+                    Every edition
                     <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                   </span>
                 </span>
               </a>
             </article>
 
-            <!-- WWDC26 Watch Party (compact, tall → full section below) -->
             <article class="work-card work-card--tall reveal-up" style="--i:1">
+              <a class="work-card__link" href="#outreach">
+                <span class="work-card__media work-card__media--green">
+                  <!-- TODO: swap to a Bharati Vidyapeeth photo once they land, so the
+                       card leads with the latest session. -->
+                  <img src="assets/Events/student-outreach/vu-april-2026/01.jpeg" alt="Swift Student Outreach at a Pune university" loading="lazy" />
+                </span>
+                <span class="work-card__body">
+                  <span class="work-card__tag work-card__tag--outreach">Student outreach</span>
+                  <span class="work-card__title">Swift, taught on campus.</span>
+                  <span class="work-card__desc">
+                    We run the session inside the university, on their
+                    timetable, for students who haven't opened Xcode yet.
+                  </span>
+                  <span class="work-card__meta"><strong>2 sessions</strong> · latest 2026</span>
+                  <span class="work-card__cta">
+                    Every session
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  </span>
+                </span>
+              </a>
+            </article>
+
+            <article class="work-card work-card--tall reveal-up" style="--i:2">
               <a class="work-card__link" href="#wwdc">
                 <span class="work-card__media work-card__media--violet">
                   <img src="assets/Events/watchparty/wwdc26/01.jpg" alt="SwiftPune WWDC26 watch party at The Daily All Day, Pune" loading="lazy" />
                 </span>
                 <span class="work-card__body">
-                  <span class="work-card__tag work-card__tag--party">Community night</span>
-                  <span class="work-card__title">WWDC26 watch party.</span>
-                  <span class="work-card__meta">The Daily All Day, Pune · Jun 2026</span>
+                  <span class="work-card__tag work-card__tag--party">Community nights</span>
+                  <span class="work-card__title">The keynote, on a big screen.</span>
                   <span class="work-card__desc">
-                    Keynote night, together — the whole community in one room
-                    for Apple's biggest reveal of the year.
+                    Once a year we take over a café for the WWDC keynote and
+                    react to the whole thing together.
                   </span>
+                  <span class="work-card__meta"><strong>Annual</strong> · latest Jun 2026</span>
                   <span class="work-card__cta">
                     How the night went
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  </span>
-                </span>
-              </a>
-            </article>
-
-            <!-- S001 — the first meetup (compact, tall → full section below) -->
-            <article class="work-card work-card--tall reveal-up" style="--i:2">
-              <a class="work-card__link" href="#s001">
-                <span class="work-card__media work-card__media--coral">
-                  <img src="assets/Events/S001/01.jpeg" alt="SwiftPune's first meetup, S001" loading="lazy" />
-                </span>
-                <span class="work-card__body">
-                  <span class="work-card__tag work-card__tag--meetup">S001 · Meetup</span>
-                  <span class="work-card__title">Where it all started.</span>
-                  <span class="work-card__meta">Hosted by EPAM Systems, Pune</span>
-                  <span class="work-card__desc">
-                    The very first SwiftPune — a room of Pune's Apple-platform
-                    developers, the talks that proved this could be a thing.
-                  </span>
-                  <span class="work-card__cta">
-                    The first chapter
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  </span>
-                </span>
-              </a>
-            </article>
-
-            <!-- Swift Student Outreach — Vishwakarma University (wide feature) -->
-            <article class="work-card work-card--wide reveal-up" style="--i:3">
-              <a class="work-card__link" href="#outreach">
-                <span class="work-card__media work-card__media--green">
-                  <img src="assets/Events/student-outreach/vu-april-2026/01.jpeg" alt="Swift Student Outreach at Vishwakarma University" loading="lazy" />
-                </span>
-                <span class="work-card__body">
-                  <span class="work-card__tag work-card__tag--outreach">Student outreach</span>
-                  <span class="work-card__title">We took Swift to campus.</span>
-                  <span class="work-card__meta">Vishwakarma University, Pune</span>
-                  <span class="work-card__desc">
-                    Our Swift Student Outreach program, run in collaboration
-                    with universities, kicked off at Vishwakarma University —
-                    hands-on Swift for the next generation of builders, right
-                    where they study.
-                  </span>
-                  <span class="work-card__cta">
-                    About the program
                     <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                   </span>
                 </span>
@@ -274,9 +270,530 @@
       </section>
 
       <!-- ===========================================================
-           Meetups — when, where, RSVP
+           PROGRAMME SECTION — Meetups
+           -----------------------------------------------------------
+           TO ADD A NEW MEETUP (S003, S004, …):
+             1. Move the current "latest edition" feature + its recap
+                into a new <li class="edition"> row in the log below,
+                keeping only its photos, lead paragraph and facts.
+             2. Drop the new edition's photos in assets/Events/S00N/
+                as 01/02/03.jpeg and point the feature gallery at them.
+             3. Update the "latest" row in the log and the edition count
+                on the programme card up in #work.
+           The section never changes shape — only its contents.
            =========================================================== -->
-      <section class="section section--meetups reveal" id="meetups">
+      <section class="section section--program section--meetups reveal" id="meetups">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// program.meetups</p>
+            <h2 class="display">
+              Meetups, hosted by <span class="ink">Pune companies</span>.
+            </h2>
+            <p class="lead">
+              Half a Saturday at a host company's office: three 20-minute
+              talks, a break with real food, and a hands-on lab to close.
+              Pitched at people already shipping on Apple's platforms. Free
+              to attend, and every talk goes up on YouTube afterwards.
+            </p>
+          </header>
+
+          <!-- ----- Latest edition ----- -->
+          <div class="initiative">
+            <div class="initiative__media">
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/S002/01.jpeg" alt="SwiftPune S002 meetup at Xplor Technologies — photo 1" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/S002/02.jpeg" alt="SwiftPune S002 meetup at Xplor Technologies — photo 2" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/S002/03.jpeg" alt="SwiftPune S002 meetup at Xplor Technologies — photo 3" loading="lazy" /></figure>
+                </div>
+                <span class="gallery__scrim" aria-hidden="true"></span>
+                <div class="gallery__dots" role="group" aria-label="S002 photos">
+                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// latest edition — S002</p>
+              <h3 class="display display--feature">
+                Three talks and a <span class="ink">hands-on lab</span>.
+              </h3>
+              <p class="lead">
+                March 8, 2026, fourteen floors up in Kharadi. App
+                discoverability, CI/CD with Fastlane, and a real-world Swift 6
+                migration — then laptops out for a lab on decomposing Apple
+                platform designs.
+              </p>
+              <ul class="initiative__facts">
+                <li>
+                  <span class="initiative__fact-k">Hosted by</span>
+                  <span class="initiative__fact-v">Xplor Technologies, Kharadi</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">When</span>
+                  <span class="initiative__fact-v">Saturday, March 8, 2026</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">On the day</span>
+                  <span class="initiative__fact-v">3 talks, 1 lab, all recorded</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- ----- Latest edition: full run sheet ----- -->
+          <p class="log-label log-label--recap">// run_sheet — S002</p>
+          <div class="recap">
+            <ol class="recap__agenda" aria-label="S002 agenda">
+              <li class="recap__row recap__row--check">
+                <span class="recap__time">09:45</span>
+                <div class="recap__body">
+                  <p class="recap__type">// check_in</p>
+                  <h4 class="recap__title">Doors &amp; check-in</h4>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--talk">
+                <span class="recap__time">10:15</span>
+                <div class="recap__body">
+                  <p class="recap__type">// talk</p>
+                  <h4 class="recap__title">Make Your Apps More Discoverable</h4>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/kanishka-c/" target="_blank" rel="noopener">Kanishka Chaudhry</a>
+                    — SDE @ Upstox · 2× Apple Scholar
+                  </p>
+                  <a class="recap__link" href="https://www.youtube.com/watch?v=rjuUAT50alc" target="_blank" rel="noopener">
+                    Watch recording
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                  </a>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--sponsor">
+                <span class="recap__time">10:35</span>
+                <div class="recap__body">
+                  <p class="recap__type">// sponsor</p>
+                  <h4 class="recap__title">Stage minute — Xplor Technologies</h4>
+                  <p class="recap__by">Venue &amp; food sponsor for S002.</p>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--talk">
+                <span class="recap__time">10:50</span>
+                <div class="recap__body">
+                  <p class="recap__type">// talk</p>
+                  <h4 class="recap__title">CI/CD With GitHub Actions and Fastlane</h4>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/garimasaini0/" target="_blank" rel="noopener">Garima Saini</a>
+                    — Sr. iOS Engineer @ Xplor
+                  </p>
+                  <a class="recap__link" href="https://www.youtube.com/watch?v=QNa4UO-9G1w" target="_blank" rel="noopener">
+                    Watch recording
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                  </a>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--talk">
+                <span class="recap__time">11:10</span>
+                <div class="recap__body">
+                  <p class="recap__type">// talk</p>
+                  <h4 class="recap__title">Swift 6 Migration</h4>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/divya-maloo-72629284/" target="_blank" rel="noopener">Divya Maloo</a>
+                    (Sr. iOS @ PhonePe) &amp;
+                    <a href="https://www.linkedin.com/in/swetal-matkar-73a836204/" target="_blank" rel="noopener">Swetal Matkar</a>
+                    (iOS Developer)
+                  </p>
+                  <a class="recap__link" href="https://www.youtube.com/watch?v=LWGDs-tR6_o" target="_blank" rel="noopener">
+                    Watch recording
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                  </a>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--break">
+                <span class="recap__time">11:30</span>
+                <div class="recap__body">
+                  <p class="recap__type">// break</p>
+                  <h4 class="recap__title">Refreshments &amp; networking</h4>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--lab">
+                <span class="recap__time">12:00</span>
+                <div class="recap__body">
+                  <p class="recap__type">// lab</p>
+                  <h4 class="recap__title">Decompose Designs for Apple Platforms</h4>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/nikhil-nigade-4a395b358/" target="_blank" rel="noopener">Nikhil Nigade</a>
+                    — iOS, macOS &amp; systems engineer
+                  </p>
+                  <div class="recap__repos">
+                    <a class="recap__link" href="https://github.com/dezinezync/SwiftPuneS002-Labs-Starter" target="_blank" rel="noopener">
+                      Labs · Starter
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                    </a>
+                    <a class="recap__link" href="https://github.com/dezinezync/SwiftPuneS002-Labs-Final" target="_blank" rel="noopener">
+                      Labs · Final
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--close">
+                <span class="recap__time">12:30</span>
+                <div class="recap__body">
+                  <p class="recap__type">// close</p>
+                  <h4 class="recap__title">Closing &amp; networking</h4>
+                </div>
+              </li>
+            </ol>
+
+            <aside class="recap__meta" aria-label="Venue and partners">
+              <div class="recap__meta-block">
+                <p class="recap__meta-eyebrow">// venue</p>
+                <p class="recap__meta-title">Xplor Tech1 Systems</p>
+                <p class="recap__meta-body">
+                  14th Floor, International Technology Park · Block 1,
+                  Wing 2 · Kharadi, Pune 411014
+                </p>
+                <p class="recap__meta-pin">
+                  <span class="dot"></span>
+                  <code>18.5616° N · 73.9564° E</code>
+                </p>
+                <a class="recap__meta-link" href="https://www.google.com/maps/place/Xplor+Tech1+Systems+Private+Limited/@18.5616118,73.9564067,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c34f6c6895e3:0xf4a5781b456b38a3!8m2!3d18.5616118!4d73.9564067!16s%2Fg%2F11vc7hlg62" target="_blank" rel="noopener">
+                  Open in Maps
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+
+              <div class="recap__meta-divider" aria-hidden="true"></div>
+
+              <div class="recap__meta-block">
+                <p class="recap__meta-eyebrow">// hosted_by</p>
+                <p class="recap__meta-title">Xplor Technologies</p>
+                <p class="recap__meta-body">
+                  Hosted venue and food for S002. A genuine thank-you from
+                  the SwiftPune room.
+                </p>
+                <a class="recap__meta-link" href="https://www.xplortechnologies.com" target="_blank" rel="noopener">
+                  xplortechnologies.com
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+
+              <div class="recap__meta-divider" aria-hidden="true"></div>
+
+              <div class="recap__meta-block">
+                <p class="recap__meta-eyebrow">// registration</p>
+                <a class="recap__meta-link recap__meta-link--strong" href="https://luma.com/1jb79fac" target="_blank" rel="noopener">
+                  S002 event page on Luma
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </aside>
+          </div>
+
+          <!-- ----- Every edition so far ----- -->
+          <div class="editions">
+            <p class="log-label">// editions.log</p>
+            <ol class="editions__list">
+              <li class="edition edition--latest">
+                <div class="edition__summary">
+                  <span class="edition__row">
+                    <span class="edition__node" aria-hidden="true"></span>
+                    <span class="edition__head">
+                      <span class="edition__key">S002</span>
+                      <span class="edition__name">Xplor Technologies, Kharadi</span>
+                      <span class="edition__chip">latest</span>
+                    </span>
+                    <span class="edition__meta">Mar 8, 2026</span>
+                  </span>
+                </div>
+              </li>
+
+              <li class="edition">
+                <details class="edition__box">
+                  <summary class="edition__summary">
+                    <span class="edition__row">
+                      <span class="edition__node" aria-hidden="true"></span>
+                      <span class="edition__head">
+                        <span class="edition__key">S001</span>
+                        <span class="edition__name">EPAM Systems, Pune</span>
+                      </span>
+                      <!-- TODO: confirm S001's date, then replace "The first one" -->
+                      <span class="edition__meta">The first one</span>
+                      <span class="edition__chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </span>
+                    </span>
+                  </summary>
+                  <div class="edition__detail">
+                    <div class="edition__shots">
+                      <img src="assets/Events/S001/01.jpeg" alt="SwiftPune's first meetup, S001 — photo 1" loading="lazy" />
+                      <img src="assets/Events/S001/02.jpeg" alt="SwiftPune's first meetup, S001 — photo 2" loading="lazy" />
+                      <img src="assets/Events/S001/03.jpeg" alt="SwiftPune's first meetup, S001 — photo 3" loading="lazy" />
+                    </div>
+                    <div class="edition__text">
+                      <p>
+                        SwiftPune began as a single question — is there a room
+                        in Pune for the people who build on Apple's platforms?
+                        S001 was the answer. EPAM Systems gave us the space, a
+                        handful of developers gave the talks, and a roomful of
+                        strangers left as a community that wanted to come back.
+                      </p>
+                      <ul class="edition__facts">
+                        <li>
+                          <span class="initiative__fact-k">Hosted by</span>
+                          <span class="initiative__fact-v">EPAM Systems, Pune</span>
+                        </li>
+                        <li>
+                          <span class="initiative__fact-k">On the day</span>
+                          <span class="initiative__fact-v">Talks, then hallway conversations that ran long</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </details>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           PROGRAMME SECTION — Swift Student Outreach
+           -----------------------------------------------------------
+           TO ADD A NEW CAMPUS SESSION: same three steps as Meetups
+           above. Photos live in assets/Events/student-outreach/<slug>/
+           as 01/02/03.jpeg.
+           =========================================================== -->
+      <section class="section section--program section--outreach reveal" id="outreach">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// program.student_outreach</p>
+            <h2 class="display">
+              Swift, taken to <span class="ink">campus</span>.
+            </h2>
+            <p class="lead">
+              Most students won't travel across the city for a Saturday
+              meetup, so we go to them instead — into the university, on
+              their timetable, for people who haven't opened Xcode yet.
+              Faculty set the room; we bring the laptops-out part.
+            </p>
+          </header>
+
+          <!-- ----- Latest session ----- -->
+          <div class="initiative initiative--flip">
+            <div class="initiative__media initiative__media--green">
+              <!-- Photos: drop 01.jpeg / 02.jpeg / 03.jpeg into
+                   assets/Events/student-outreach/bharati-vidyapeeth-2026/
+                   and this gallery lights up with no further edits. Until
+                   they land, main.js hides the missing images and this
+                   placeholder shows through. Delete it once they're in. -->
+              <span class="work-ph" aria-hidden="true">
+                <span class="work-ph__label">photos coming</span>
+              </span>
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/bharati-vidyapeeth-2026/01.jpeg" alt="Swift Student Outreach at Bharati Vidyapeeth, Pune — photo 1" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/bharati-vidyapeeth-2026/02.jpeg" alt="Swift Student Outreach at Bharati Vidyapeeth, Pune — photo 2" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/bharati-vidyapeeth-2026/03.jpeg" alt="Swift Student Outreach at Bharati Vidyapeeth, Pune — photo 3" loading="lazy" /></figure>
+                </div>
+                <span class="gallery__scrim" aria-hidden="true"></span>
+                <div class="gallery__dots" role="group" aria-label="Bharati Vidyapeeth session photos">
+                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// latest session — Bharati Vidyapeeth</p>
+              <h3 class="display display--feature">
+                Xcode, opened for the <span class="ink">first time</span>.
+              </h3>
+              <!-- TODO: sharpen with the real specifics — department, how many
+                   students, who from the crew ran it, what got built. -->
+              <p class="lead">
+                We took the programme to Bharati Vidyapeeth in Pune, in the
+                same shape as the first: no keynote, no career advice, just
+                a room of students opening Xcode for the first time and
+                getting something running on their own machines.
+              </p>
+              <ul class="initiative__facts">
+                <li>
+                  <span class="initiative__fact-k">Campus</span>
+                  <span class="initiative__fact-v">Bharati Vidyapeeth, Pune</span>
+                </li>
+                <li>
+                  <!-- TODO: replace with the exact date -->
+                  <span class="initiative__fact-k">When</span>
+                  <span class="initiative__fact-v">2026</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">For</span>
+                  <span class="initiative__fact-v">Students meeting Swift &amp; SwiftUI for the first time</span>
+                </li>
+              </ul>
+              <p class="initiative__note">
+                <!-- TODO: replace with the real Google Form URL for campus outreach -->
+                <a class="link" href="https://forms.gle/REPLACE-WITH-OUTREACH-FORM" target="_blank" rel="noopener">
+                  Bring SwiftPune to your campus
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <!-- ----- Every session so far ----- -->
+          <div class="editions">
+            <p class="log-label">// sessions.log</p>
+            <ol class="editions__list">
+              <li class="edition edition--latest">
+                <div class="edition__summary">
+                  <span class="edition__row">
+                    <span class="edition__node" aria-hidden="true"></span>
+                    <span class="edition__head">
+                      <span class="edition__key">02</span>
+                      <span class="edition__name">Bharati Vidyapeeth, Pune</span>
+                      <span class="edition__chip">latest</span>
+                    </span>
+                    <!-- TODO: replace with the exact date -->
+                    <span class="edition__meta">2026</span>
+                  </span>
+                </div>
+              </li>
+
+              <li class="edition">
+                <details class="edition__box">
+                  <summary class="edition__summary">
+                    <span class="edition__row">
+                      <span class="edition__node" aria-hidden="true"></span>
+                      <span class="edition__head">
+                        <span class="edition__key">01</span>
+                        <span class="edition__name">Vishwakarma University, Pune</span>
+                      </span>
+                      <span class="edition__meta">Apr 2026</span>
+                      <span class="edition__chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </span>
+                    </span>
+                  </summary>
+                  <div class="edition__detail">
+                    <div class="edition__shots">
+                      <img src="assets/Events/student-outreach/vu-april-2026/01.jpeg" alt="Swift Student Outreach at Vishwakarma University — photo 1" loading="lazy" />
+                      <img src="assets/Events/student-outreach/vu-april-2026/02.jpeg" alt="Swift Student Outreach at Vishwakarma University — photo 2" loading="lazy" />
+                      <img src="assets/Events/student-outreach/vu-april-2026/03.jpeg" alt="Swift Student Outreach at Vishwakarma University — photo 3" loading="lazy" />
+                    </div>
+                    <div class="edition__text">
+                      <p>
+                        The one that started the programme. We ran the first
+                        campus session at Vishwakarma University, Pune —
+                        hands-on Swift for students where they already study,
+                        which turned out to work far better than asking them
+                        to find us on a weekend.
+                      </p>
+                      <ul class="edition__facts">
+                        <li>
+                          <span class="initiative__fact-k">Campus</span>
+                          <span class="initiative__fact-v">Vishwakarma University, Pune</span>
+                        </li>
+                        <li>
+                          <span class="initiative__fact-k">For</span>
+                          <span class="initiative__fact-v">Students getting started with Swift &amp; SwiftUI</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </details>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           PROGRAMME SECTION — Community nights
+           -----------------------------------------------------------
+           One edition so far, so there's no log yet — the feature is the
+           whole story. When WWDC27 comes round, copy the .editions block
+           from #meetups above, move WWDC26 into a collapsed row, and
+           feature the new one.
+           =========================================================== -->
+      <section class="section section--program section--wwdc reveal" id="wwdc">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// program.community_nights</p>
+            <h2 class="display">
+              One night a year, we just <span class="ink">watch</span>.
+            </h2>
+            <p class="lead">
+              No talks, no agenda, no lab. Once a year the whole community
+              gets in one room for the WWDC keynote and reacts to it
+              together — which is still the best way to watch it.
+            </p>
+          </header>
+
+          <div class="initiative">
+            <div class="initiative__media">
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/01.jpg" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 1" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/02.jpg" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 2" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/03.jpg" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 3" loading="lazy" /></figure>
+                </div>
+                <span class="gallery__scrim" aria-hidden="true"></span>
+                <div class="gallery__dots" role="group" aria-label="WWDC26 watch party photos">
+                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// latest night — WWDC26</p>
+              <h3 class="display display--feature">
+                The community's first proper <span class="ink">party</span>.
+              </h3>
+              <p class="lead">
+                For WWDC26 we took over The Daily All Day in Pune, put the
+                keynote on the big screen, and spent the evening reacting to
+                every announcement in a room full of people who care as much
+                as you do.
+              </p>
+              <ul class="initiative__facts">
+                <li>
+                  <span class="initiative__fact-k">Where</span>
+                  <span class="initiative__fact-v">The Daily All Day, Pune</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">When</span>
+                  <span class="initiative__fact-v">Keynote night, June 2026</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">The vibe</span>
+                  <span class="initiative__fact-v">Keynote on the big screen, the whole community around it</span>
+                </li>
+              </ul>
+              <p class="initiative__note">
+                <a class="link" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+                  Catch the next one on WhatsApp
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           How to actually turn up — schedule, RSVP, typical run-sheet
+           =========================================================== -->
+      <section class="section section--attend reveal" id="attend">
         <div class="container">
           <div class="meetups">
             <div class="meetups__copy">
@@ -343,368 +860,6 @@
                 with each LinkedIn / Luma announcement.
               </p>
             </aside>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===========================================================
-           S001 — the first meetup, its own feature section
-           =========================================================== -->
-      <section class="section section--initiative section--s001 reveal" id="s001">
-        <div class="container">
-          <div class="initiative">
-            <div class="initiative__media">
-              <div class="gallery" data-gallery>
-                <div class="gallery__track">
-                  <figure class="gallery__slide"><img src="assets/Events/S001/01.jpeg" alt="SwiftPune's first meetup, S001 — photo 1" loading="lazy" /></figure>
-                  <figure class="gallery__slide"><img src="assets/Events/S001/02.jpeg" alt="SwiftPune's first meetup, S001 — photo 2" loading="lazy" /></figure>
-                  <figure class="gallery__slide"><img src="assets/Events/S001/03.jpeg" alt="SwiftPune's first meetup, S001 — photo 3" loading="lazy" /></figure>
-                </div>
-                <span class="gallery__scrim" aria-hidden="true"></span>
-                <div class="gallery__dots" role="group" aria-label="S001 photos">
-                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
-                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
-                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
-                </div>
-              </div>
-            </div>
-            <div class="initiative__copy">
-              <p class="comment-eyebrow">// event.S001 — the first meetup</p>
-              <h2 class="display">
-                Where it <span class="ink">all started</span>.
-              </h2>
-              <p class="lead">
-                SwiftPune began as a single question — is there a room in Pune
-                for the people who build on Apple's platforms? S001 was the
-                answer. EPAM Systems gave us the space, a handful of developers
-                gave the talks, and a roomful of strangers left as a community
-                that wanted to come back.
-              </p>
-              <ul class="initiative__facts">
-                <li>
-                  <span class="initiative__fact-k">Host</span>
-                  <span class="initiative__fact-v">EPAM Systems, Pune</span>
-                </li>
-                <li>
-                  <span class="initiative__fact-k">Format</span>
-                  <span class="initiative__fact-v">Talks, then hallway conversations that ran long</span>
-                </li>
-                <li>
-                  <span class="initiative__fact-k">The room</span>
-                  <span class="initiative__fact-v">Pune's iOS, macOS &amp; Swift developers, meeting in person</span>
-                </li>
-              </ul>
-              <p class="initiative__note">
-                <a class="link" href="#recent">
-                  The story continued at S002
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===========================================================
-           Recent meetup — S002 recap (the actual most recent event)
-           =========================================================== -->
-      <section class="section section--recent reveal" id="recent">
-        <div class="container">
-          <header class="section-head">
-            <p class="comment-eyebrow">// log.last — S002</p>
-            <h2 class="display">
-              The most recent <span class="ink">meetup</span>.
-            </h2>
-            <p class="lead">
-              <strong>March 8, 2026 · Xplor Tech1 Systems, Kharadi, Pune.</strong>
-              Three talks, one hands-on lab on decomposing designs for
-              Apple platforms, and the room that made it all worthwhile.
-            </p>
-          </header>
-
-          <div class="recap__gallery">
-            <div class="gallery" data-gallery>
-              <div class="gallery__track">
-                <figure class="gallery__slide"><img src="assets/Events/S002/01.jpeg" alt="SwiftPune S002 meetup at Xplor Technologies — photo 1" loading="lazy" /></figure>
-                <figure class="gallery__slide"><img src="assets/Events/S002/02.jpeg" alt="SwiftPune S002 meetup at Xplor Technologies — photo 2" loading="lazy" /></figure>
-                <figure class="gallery__slide"><img src="assets/Events/S002/03.jpeg" alt="SwiftPune S002 meetup at Xplor Technologies — photo 3" loading="lazy" /></figure>
-              </div>
-              <span class="gallery__scrim" aria-hidden="true"></span>
-              <div class="gallery__dots" role="group" aria-label="S002 photos">
-                <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
-                <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
-                <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
-              </div>
-            </div>
-          </div>
-
-          <div class="recap">
-            <ol class="recap__agenda" aria-label="S002 agenda">
-              <li class="recap__row recap__row--check">
-                <span class="recap__time">09:45</span>
-                <div class="recap__body">
-                  <p class="recap__type">// check_in</p>
-                  <h3 class="recap__title">Doors &amp; check-in</h3>
-                </div>
-              </li>
-
-              <li class="recap__row recap__row--talk">
-                <span class="recap__time">10:15</span>
-                <div class="recap__body">
-                  <p class="recap__type">// talk</p>
-                  <h3 class="recap__title">Make Your Apps More Discoverable</h3>
-                  <p class="recap__by">
-                    <a href="https://www.linkedin.com/in/kanishka-c/" target="_blank" rel="noopener">Kanishka Chaudhry</a>
-                    — SDE @ Upstox · 2× Apple Scholar
-                  </p>
-                  <a class="recap__link" href="https://www.youtube.com/watch?v=rjuUAT50alc" target="_blank" rel="noopener">
-                    Watch recording
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                  </a>
-                </div>
-              </li>
-
-              <li class="recap__row recap__row--sponsor">
-                <span class="recap__time">10:35</span>
-                <div class="recap__body">
-                  <p class="recap__type">// sponsor</p>
-                  <h3 class="recap__title">Stage minute — Xplor Technologies</h3>
-                  <p class="recap__by">Venue &amp; food sponsor for S002.</p>
-                </div>
-              </li>
-
-              <li class="recap__row recap__row--talk">
-                <span class="recap__time">10:50</span>
-                <div class="recap__body">
-                  <p class="recap__type">// talk</p>
-                  <h3 class="recap__title">CI/CD With GitHub Actions and Fastlane</h3>
-                  <p class="recap__by">
-                    <a href="https://www.linkedin.com/in/garimasaini0/" target="_blank" rel="noopener">Garima Saini</a>
-                    — Sr. iOS Engineer @ Xplor
-                  </p>
-                  <a class="recap__link" href="https://www.youtube.com/watch?v=QNa4UO-9G1w" target="_blank" rel="noopener">
-                    Watch recording
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                  </a>
-                </div>
-              </li>
-
-              <li class="recap__row recap__row--talk">
-                <span class="recap__time">11:10</span>
-                <div class="recap__body">
-                  <p class="recap__type">// talk</p>
-                  <h3 class="recap__title">Swift 6 Migration</h3>
-                  <p class="recap__by">
-                    <a href="https://www.linkedin.com/in/divya-maloo-72629284/" target="_blank" rel="noopener">Divya Maloo</a>
-                    (Sr. iOS @ PhonePe) &amp;
-                    <a href="https://www.linkedin.com/in/swetal-matkar-73a836204/" target="_blank" rel="noopener">Swetal Matkar</a>
-                    (iOS Developer)
-                  </p>
-                  <a class="recap__link" href="https://www.youtube.com/watch?v=LWGDs-tR6_o" target="_blank" rel="noopener">
-                    Watch recording
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                  </a>
-                </div>
-              </li>
-
-              <li class="recap__row recap__row--break">
-                <span class="recap__time">11:30</span>
-                <div class="recap__body">
-                  <p class="recap__type">// break</p>
-                  <h3 class="recap__title">Refreshments &amp; networking</h3>
-                </div>
-              </li>
-
-              <li class="recap__row recap__row--lab">
-                <span class="recap__time">12:00</span>
-                <div class="recap__body">
-                  <p class="recap__type">// lab</p>
-                  <h3 class="recap__title">Decompose Designs for Apple Platforms</h3>
-                  <p class="recap__by">
-                    <a href="https://www.linkedin.com/in/nikhil-nigade-4a395b358/" target="_blank" rel="noopener">Nikhil Nigade</a>
-                    — iOS, macOS &amp; systems engineer
-                  </p>
-                  <div class="recap__repos">
-                    <a class="recap__link" href="https://github.com/dezinezync/SwiftPuneS002-Labs-Starter" target="_blank" rel="noopener">
-                      Labs · Starter
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                    </a>
-                    <a class="recap__link" href="https://github.com/dezinezync/SwiftPuneS002-Labs-Final" target="_blank" rel="noopener">
-                      Labs · Final
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                    </a>
-                  </div>
-                </div>
-              </li>
-
-              <li class="recap__row recap__row--close">
-                <span class="recap__time">12:30</span>
-                <div class="recap__body">
-                  <p class="recap__type">// close</p>
-                  <h3 class="recap__title">Closing &amp; networking</h3>
-                </div>
-              </li>
-            </ol>
-
-            <aside class="recap__meta" aria-label="Venue and partners">
-              <div class="recap__meta-block">
-                <p class="recap__meta-eyebrow">// venue</p>
-                <p class="recap__meta-title">Xplor Tech1 Systems</p>
-                <p class="recap__meta-body">
-                  14th Floor, International Technology Park · Block 1,
-                  Wing 2 · Kharadi, Pune 411014
-                </p>
-                <p class="recap__meta-pin">
-                  <span class="dot"></span>
-                  <code>18.5616° N · 73.9564° E</code>
-                </p>
-                <a class="recap__meta-link" href="https://www.google.com/maps/place/Xplor+Tech1+Systems+Private+Limited/@18.5616118,73.9564067,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c34f6c6895e3:0xf4a5781b456b38a3!8m2!3d18.5616118!4d73.9564067!16s%2Fg%2F11vc7hlg62" target="_blank" rel="noopener">
-                  Open in Maps
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-              </div>
-
-              <div class="recap__meta-divider" aria-hidden="true"></div>
-
-              <div class="recap__meta-block">
-                <p class="recap__meta-eyebrow">// hosted_by</p>
-                <p class="recap__meta-title">Xplor Technologies</p>
-                <p class="recap__meta-body">
-                  Hosted venue and food for S002. A genuine thank-you from
-                  the SwiftPune room.
-                </p>
-                <a class="recap__meta-link" href="https://www.xplortechnologies.com" target="_blank" rel="noopener">
-                  xplortechnologies.com
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-              </div>
-
-              <div class="recap__meta-divider" aria-hidden="true"></div>
-
-              <div class="recap__meta-block">
-                <p class="recap__meta-eyebrow">// registration</p>
-                <a class="recap__meta-link recap__meta-link--strong" href="https://luma.com/1jb79fac" target="_blank" rel="noopener">
-                  S002 event page on Luma
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===========================================================
-           Swift Student Outreach — Vishwakarma University, its own section
-           =========================================================== -->
-      <section class="section section--initiative section--outreach reveal" id="outreach">
-        <div class="container">
-          <div class="initiative initiative--flip">
-            <div class="initiative__media">
-              <div class="gallery" data-gallery>
-                <div class="gallery__track">
-                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/vu-april-2026/01.jpeg" alt="Swift Student Outreach at Vishwakarma University — photo 1" loading="lazy" /></figure>
-                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/vu-april-2026/02.jpeg" alt="Swift Student Outreach at Vishwakarma University — photo 2" loading="lazy" /></figure>
-                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/vu-april-2026/03.jpeg" alt="Swift Student Outreach at Vishwakarma University — photo 3" loading="lazy" /></figure>
-                </div>
-                <span class="gallery__scrim" aria-hidden="true"></span>
-                <div class="gallery__dots" role="group" aria-label="Student outreach photos">
-                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
-                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
-                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
-                </div>
-              </div>
-            </div>
-            <div class="initiative__copy">
-              <p class="comment-eyebrow">// program.student_outreach</p>
-              <h2 class="display">
-                Swift, taken to <span class="ink">campus</span>.
-              </h2>
-              <p class="lead">
-                Not every student can make it to a weekend meetup — so we go to
-                them. Our Swift Student Outreach program partners with
-                universities to bring hands-on Apple-platform development to
-                students where they already study. The first session ran at
-                Vishwakarma University, Pune.
-              </p>
-              <ul class="initiative__facts">
-                <li>
-                  <span class="initiative__fact-k">First session</span>
-                  <span class="initiative__fact-v">Vishwakarma University, Pune</span>
-                </li>
-                <li>
-                  <span class="initiative__fact-k">In partnership with</span>
-                  <span class="initiative__fact-v">University faculty &amp; students</span>
-                </li>
-                <li>
-                  <span class="initiative__fact-k">For</span>
-                  <span class="initiative__fact-v">Students getting started with Swift &amp; SwiftUI</span>
-                </li>
-              </ul>
-              <p class="initiative__note">
-                <!-- TODO: replace with the real Google Form URL for campus outreach -->
-                <a class="link" href="https://forms.gle/REPLACE-WITH-OUTREACH-FORM" target="_blank" rel="noopener">
-                  Bring SwiftPune to your campus
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===========================================================
-           WWDC26 Watch Party — The Daily All Day, its own section
-           =========================================================== -->
-      <section class="section section--initiative section--wwdc reveal" id="wwdc">
-        <div class="container">
-          <div class="initiative">
-            <div class="initiative__media">
-              <div class="gallery" data-gallery>
-                <div class="gallery__track">
-                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/01.jpg" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 1" loading="lazy" /></figure>
-                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/02.jpg" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 2" loading="lazy" /></figure>
-                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/03.jpg" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 3" loading="lazy" /></figure>
-                </div>
-                <span class="gallery__scrim" aria-hidden="true"></span>
-                <div class="gallery__dots" role="group" aria-label="WWDC26 watch party photos">
-                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
-                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
-                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
-                </div>
-              </div>
-            </div>
-            <div class="initiative__copy">
-              <p class="comment-eyebrow">// community.wwdc26</p>
-              <h2 class="display">
-                The community's first proper <span class="ink">party</span>.
-              </h2>
-              <p class="lead">
-                Some keynotes are just better in a room full of people who care
-                as much as you do. For WWDC26 we took over The Daily All Day in
-                Pune, put the keynote on the big screen, and reacted to every
-                announcement together.
-              </p>
-              <ul class="initiative__facts">
-                <li>
-                  <span class="initiative__fact-k">Where</span>
-                  <span class="initiative__fact-v">The Daily All Day, Pune</span>
-                </li>
-                <li>
-                  <span class="initiative__fact-k">When</span>
-                  <span class="initiative__fact-v">WWDC26 keynote night · June 2026</span>
-                </li>
-                <li>
-                  <span class="initiative__fact-k">The vibe</span>
-                  <span class="initiative__fact-v">Keynote on the big screen, the whole community around it</span>
-                </li>
-              </ul>
-              <p class="initiative__note">
-                <a class="link" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
-                  Catch the next one on WhatsApp
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -943,6 +1098,7 @@
               <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">WhatsApp group</a>
               <a href="#work">Our work</a>
               <a href="#meetups">Meetups</a>
+              <a href="#outreach">Student outreach</a>
               <a href="#first-time">First-time visit</a>
             </div>
             <div class="footer-col">

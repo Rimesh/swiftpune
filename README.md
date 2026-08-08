@@ -18,6 +18,31 @@ visionOS, and server-side Swift) in Pune, India.
 It leads with our actual work — meetups, campus outreach, and community nights —
 rather than mission statements.
 
+## Adding an event
+
+The homepage is organised by **programme**, not by event. There are three,
+and the number never changes:
+
+| Programme | Section | Photos live in |
+| --- | --- | --- |
+| Meetups | `#meetups` | `assets/Events/S00N/` |
+| Swift Student Outreach | `#outreach` | `assets/Events/student-outreach/<campus-slug>/` |
+| Community nights | `#wwdc` | `assets/Events/watchparty/<year>/` |
+
+Each programme section is a featured **latest** edition followed by a log of
+every earlier one. To add an event:
+
+1. Drop three photos in that programme's folder as `01`, `02`, `03`.
+2. Demote the current featured edition into a new `<li class="edition">`
+   row at the top of the log, keeping its photos, write-up and facts.
+   Remove its `edition--latest` class and give it a `<details>` wrapper.
+3. Put the new event in the feature slot and mark its log row
+   `edition--latest`.
+4. Update the count on that programme's card in `#work`.
+
+Nothing else moves, and the page only grows by one collapsed row per event.
+The section comments in `index.html` restate these steps in place.
+
 ## Get involved
 
 - **WhatsApp** — the fastest way to hear about the next meetup
