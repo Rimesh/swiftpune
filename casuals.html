@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      if (!location.search.includes("static")) {
+        document.documentElement.classList.add("js");
+      }
+      /* Event photos get dropped into assets/Events/… after the markup for
+         a new edition goes up, so a slot can legitimately sit empty for a
+         few days. Hide the missing image so the tinted "photos coming"
+         placeholder behind it shows through, instead of a torn-image icon
+         and sprawling alt text. Must be registered here rather than in
+         main.js — deferred scripts run after images have already failed. */
+      document.addEventListener(
+        "error",
+        function (e) {
+          if (e.target && e.target.tagName === "IMG") {
+            e.target.style.visibility = "hidden";
+          }
+        },
+        true
+      );
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#FAF7F2" />
+    <meta name="color-scheme" content="light" />
+
+    <title>Casuals — SwiftPune</title>
+    <meta
+      name="description"
+      content="SwiftPune casuals: once a month, a weekend brunch in Pune with no talks and no agenda. Meet the community, talk about what you're building, split the bill. Students welcome."
+    />
+    <link rel="canonical" href="https://swiftpune.org/casuals" />
+
+    <!-- Open Graph / social link previews (absolute URLs required) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SwiftPune" />
+    <meta property="og:url" content="https://swiftpune.org/casuals" />
+    <meta property="og:title" content="Casuals — SwiftPune" />
+    <meta
+      property="og:description"
+      content="SwiftPune casuals: once a month, a weekend brunch in Pune with no talks and no agenda. Meet the community, talk about what you're building, split the bill. Students welcome."
+    />
+    <meta property="og:image" content="https://swiftpune.org/assets/Events/Casuals/002/01.jpg" />
+    <meta property="og:image:alt" content="Casuals — SwiftPune" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Casuals — SwiftPune" />
+    <meta
+      name="twitter:description"
+      content="SwiftPune casuals: once a month, a weekend brunch in Pune with no talks and no agenda. Meet the community, talk about what you're building, split the bill. Students welcome."
+    />
+    <meta name="twitter:image" content="https://swiftpune.org/assets/Events/Casuals/002/01.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/SPLogo.png" />
+    <link rel="apple-touch-icon" href="assets/SPLogo.png" />
+
+    <link rel="preload" as="image" href="assets/SPLogo.png" fetchpriority="high" />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ===========================================================
+         Site nav — identical on every page; aria-current marks where
+         the visitor is.
+         =========================================================== -->
+    <header class="site-nav" id="siteNav" aria-label="Primary">
+      <div class="site-nav__inner">
+        <a class="brand" href="/" aria-label="SwiftPune home">
+          <span class="brand__mark">
+            <img src="assets/SPLogo.png" alt="" width="40" height="40" />
+          </span>
+          <span class="brand__word">
+            <span>SwiftPune</span>
+            <span class="brand__meta">v.2026 · Pune, IN</span>
+          </span>
+        </a>
+
+        <nav class="site-nav__links" aria-label="Sections">
+          <a href="/meetups">Meetups</a>
+          <a href="/students">Students</a>
+          <a href="/casuals" aria-current="page">Casuals</a>
+          <a href="/#core-team">Core team</a>
+          <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener" class="nav-cta">
+            Join WhatsApp
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </nav>
+
+        <button
+          class="site-nav__toggle"
+          id="navToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu" hidden>
+        <nav aria-label="Mobile sections">
+          <a href="/">Home</a>
+          <a href="/meetups">Meetups</a>
+          <a href="/students">Student outreach</a>
+          <a href="/casuals" aria-current="page">Casuals</a>
+          <a href="/#core-team">Core team</a>
+          <a href="/#sponsors">Sponsors</a>
+          <a href="#connect">Connect with us</a>
+          <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">WhatsApp group ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+
+      <!-- ===========================================================
+           Page hero — headline, then the programme's photo, which opens
+           to full width as it scrolls in (CSS scroll timeline).
+           =========================================================== -->
+      <section class="page-hero" id="top">
+        <div class="container">
+          <p class="comment-eyebrow">// program.casuals</p>
+          <h1 class="page-hero__title">No talks. Just <span class="ink">brunch</span>.</h1>
+          <p class="lead">
+            Once a month we take a long table at a restaurant in Pune and
+            spend a weekend brunch together. No agenda beyond meeting each
+            other: talk about what you're building, hear what everyone else
+            is up to, and put faces to the names in the group chat.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+              <span>Join the next one on WhatsApp</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="#wwdc">
+              <span>The WWDC watch party</span>
+            </a>
+          </div>
+        </div>
+        <div class="page-hero__stage">
+          <figure class="page-hero__media">
+            <img src="assets/Events/Casuals/002/01.jpg" srcset="assets/Events/Casuals/002/01-640.jpg 640w, assets/Events/Casuals/002/01-1024.jpg 1024w, assets/Events/Casuals/002/01.jpg 1280w" sizes="(max-width: 1320px) 94vw, 1240px" alt="The SwiftPune casual group in the courtyard at Babylon Craft Brewery, Pune" fetchpriority="high" />
+          </figure>
+        </div>
+      </section>
+
+
+      <!-- ===========================================================
+           How a casual works
+           =========================================================== -->
+      <section class="section section--program reveal" id="how">
+        <div class="container">
+          <ul class="habits" aria-label="How a casual works">
+            <li class="habits__item">
+              <p class="habits__key">// when</p>
+              <h2 class="habits__title">Once a month, over brunch.</h2>
+              <p class="habits__text">A weekend brunch at a restaurant somewhere in Pune. The place and time go up in the WhatsApp group first.</p>
+            </li>
+            <li class="habits__item">
+              <p class="habits__key">// agenda</p>
+              <h2 class="habits__title">Meet people. That's it.</h2>
+              <p class="habits__text">No talks and no slides. Tell people what you're building, hear what they are, and get to know the community.</p>
+            </li>
+            <li class="habits__item">
+              <p class="habits__key">// the bill</p>
+              <h2 class="habits__title">We split it.</h2>
+              <p class="habits__text">There's no ticket. Everyone pays their share of the bill at the table.</p>
+            </li>
+            <li class="habits__item">
+              <p class="habits__key">// who</p>
+              <h2 class="habits__title">Students welcome.</h2>
+              <p class="habits__text">Working developers, designers, students, the curious. You don't need to have come to a meetup first.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           PROGRAMME SECTION — Casuals
+           -----------------------------------------------------------
+           TO ADD A NEW CASUAL (C003, C004, …):
+             1. Drop its photos in assets/Events/Casuals/00N/ as
+                01/02/03.jpg with -1024 and -640 variants (see README).
+             2. Move the current latest casual into a new collapsed
+                <li class="edition"> row in the log below, keeping its
+                photos, write-up and facts.
+             3. Feature the new one here, mark its log row
+                edition--latest, and update the Casuals card on the
+                homepage (index.html #work).
+           =========================================================== -->
+      <section class="section section--program section--casuals reveal" id="casuals">
+        <div class="container">
+          <!-- ----- Latest casual ----- -->
+          <div class="initiative">
+            <div class="initiative__media">
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/Casuals/002/01.jpg" srcset="assets/Events/Casuals/002/01-640.jpg 640w, assets/Events/Casuals/002/01-1024.jpg 1024w, assets/Events/Casuals/002/01.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="The SwiftPune casual group in the courtyard at Babylon Craft Brewery" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/Casuals/002/02.jpg" srcset="assets/Events/Casuals/002/02-640.jpg 640w, assets/Events/Casuals/002/02-1024.jpg 1024w, assets/Events/Casuals/002/02.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="A long table of plates and conversation at Babylon Craft Brewery" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/Casuals/002/03.jpg" srcset="assets/Events/Casuals/002/03-640.jpg 640w, assets/Events/Casuals/002/03-1024.jpg 1024w, assets/Events/Casuals/002/03.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="A group selfie inside Babylon Craft Brewery" loading="lazy" /></figure>
+                </div>
+                <span class="gallery__scrim" aria-hidden="true"></span>
+                <div class="gallery__dots" role="group" aria-label="C002 photos">
+                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// latest casual — C002</p>
+              <h2 class="display display--feature">
+                Sunday brunch at <span class="ink">Babylon</span>.
+              </h2>
+              <p class="lead">
+                A long table at Babylon Craft Brewery, plates passed down
+                the middle, and conversations about side projects, day
+                jobs and everything in between.
+              </p>
+              <ul class="initiative__facts">
+                <li>
+                  <span class="initiative__fact-k">Where</span>
+                  <span class="initiative__fact-v">Babylon Craft Brewery, Pune</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">When</span>
+                  <span class="initiative__fact-v">Sunday, September 27, 2026</span>
+                </li>
+              </ul>
+              <p class="initiative__note">
+                <a class="link" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+                  Hear about the next one on WhatsApp
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <!-- ----- Every casual so far ----- -->
+          <div class="editions">
+            <p class="log-label">// casuals.log</p>
+            <ol class="editions__list">
+              <li class="edition edition--latest">
+                <div class="edition__summary">
+                  <span class="edition__row">
+                    <span class="edition__node" aria-hidden="true"></span>
+                    <span class="edition__head">
+                      <span class="edition__key">C002</span>
+                      <span class="edition__name">Babylon Craft Brewery, Pune</span>
+                      <span class="edition__chip">latest</span>
+                    </span>
+                    <span class="edition__meta">Sep 27, 2026</span>
+                  </span>
+                </div>
+              </li>
+
+              <li class="edition">
+                <details class="edition__box">
+                  <summary class="edition__summary">
+                    <span class="edition__row">
+                      <span class="edition__node" aria-hidden="true"></span>
+                      <span class="edition__head">
+                        <span class="edition__key">C001</span>
+                        <span class="edition__name">Chirp — Eat. Play. Work., Pune</span>
+                      </span>
+                      <span class="edition__meta">Aug 22, 2026</span>
+                      <span class="edition__chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </span>
+                    </span>
+                  </summary>
+                  <div class="edition__detail">
+                    <div class="edition__media">
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/Casuals/001/01.jpg" srcset="assets/Events/Casuals/001/01-640.jpg 640w, assets/Events/Casuals/001/01.jpg 960w" sizes="(max-width: 1024px) 88vw, 500px" alt="SwiftPune's first casual, around a table at Chirp in Pune" loading="lazy" /></figure>
+                </div>
+              </div>
+                    </div>
+                    <div class="edition__text">
+                      <p>
+                        The first casual. A Saturday table at Chirp, and a
+                        chance to meet the people from the meetups without
+                        a stage between us.
+                      </p>
+                      <ul class="edition__facts">
+                        <li>
+                          <span class="initiative__fact-k">Where</span>
+                          <span class="initiative__fact-v">Chirp — Eat. Play. Work., Pune</span>
+                        </li>
+                        <li>
+                          <span class="initiative__fact-k">When</span>
+                          <span class="initiative__fact-v">Saturday, August 22, 2026</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </details>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           ANNUAL SPECIAL — WWDC watch party
+           -----------------------------------------------------------
+           One edition so far, so there's no log yet — the feature is the
+           whole story. When WWDC27 comes round, copy the .editions block
+           from the casuals section above, move WWDC26 into a collapsed
+           row, and feature the new one.
+           =========================================================== -->
+      <section class="section section--program section--casuals section--annual reveal" id="wwdc">
+        <div class="container">
+          <header class="section-head annual-head">
+            <p class="comment-eyebrow">// once_a_year</p>
+            <h2 class="display">
+              One night a year, we just <span class="ink">watch</span>.
+            </h2>
+            <p class="lead">
+              The one casual with a screen in it. Every June the community
+              gets in one room for the WWDC keynote and reacts to it
+              together, which is still the best way to watch it.
+            </p>
+          </header>
+
+          <div class="initiative initiative--flip">
+            <div class="initiative__media">
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/01.jpg" srcset="assets/Events/watchparty/wwdc26/01-640.jpg 640w, assets/Events/watchparty/wwdc26/01-1024.jpg 1024w, assets/Events/watchparty/wwdc26/01.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 1" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/02.jpg" srcset="assets/Events/watchparty/wwdc26/02-640.jpg 640w, assets/Events/watchparty/wwdc26/02-1024.jpg 1024w, assets/Events/watchparty/wwdc26/02.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 2" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/watchparty/wwdc26/03.jpg" srcset="assets/Events/watchparty/wwdc26/03-640.jpg 640w, assets/Events/watchparty/wwdc26/03-1024.jpg 1024w, assets/Events/watchparty/wwdc26/03.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="SwiftPune WWDC26 watch party at The Daily All Day — photo 3" loading="lazy" /></figure>
+                </div>
+                <span class="gallery__scrim" aria-hidden="true"></span>
+                <div class="gallery__dots" role="group" aria-label="WWDC26 watch party photos">
+                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// latest night — WWDC26</p>
+              <h3 class="display display--feature">
+                The community's first proper <span class="ink">party</span>.
+              </h3>
+              <p class="lead">
+                For WWDC26 we took over The Daily All Day in Pune, put the
+                keynote on the big screen, and spent the evening reacting to
+                every announcement in a room full of people who care as much
+                as you do.
+              </p>
+              <ul class="initiative__facts">
+                <li>
+                  <span class="initiative__fact-k">Where</span>
+                  <span class="initiative__fact-v">The Daily All Day, Pune</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">When</span>
+                  <span class="initiative__fact-v">Keynote night, June 2026</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">The vibe</span>
+                  <span class="initiative__fact-v">Keynote on the big screen, the whole community around it</span>
+                </li>
+              </ul>
+              <p class="initiative__note">
+                <a class="link" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+                  Catch the next one on WhatsApp
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Connect — the same block closes every page.
+           =========================================================== -->
+      <section class="section section--connect reveal" id="connect" aria-labelledby="connect-title">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// connect</p>
+            <h2 class="display" id="connect-title">
+              Come say <span class="ink">hello</span>.
+            </h2>
+            <p class="lead">
+              Every meetup, campus session and casual is announced in the
+              WhatsApp group first. The rest are for catching up on what
+              you missed.
+            </p>
+          </header>
+
+          <ul class="connect">
+            <li class="connect__item connect__item--primary">
+              <a class="connect__link" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#whatsapp"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">Join the WhatsApp group</span>
+                <span class="connect__desc">Event dates, venues and RSVPs land here before anywhere else.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.linkedin.com/company/swiftpune/" target="_blank" rel="noopener" style="--brand: #0A66C2">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#linkedin"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">LinkedIn</span>
+                <span class="connect__desc">Announcements and event recaps.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.youtube.com/@SwiftPune" target="_blank" rel="noopener" style="--brand: #FF0000">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#youtube"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">YouTube</span>
+                <span class="connect__desc">Every meetup talk, recorded.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.instagram.com/swiftpune/" target="_blank" rel="noopener" style="--brand: #E4405F">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#instagram"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">Instagram</span>
+                <span class="connect__desc">Photos from our events.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://twitter.com/swiftpune" target="_blank" rel="noopener" style="--brand: #000000">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#x"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">X (Twitter)</span>
+                <span class="connect__desc">Quick updates from the community.</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =============================================================
+         Footer
+         ============================================================= -->
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <div class="site-footer__cluster">
+          <div class="site-footer__brand">
+            <img src="assets/SPLogo.png" alt="" width="52" height="52" />
+            <div>
+              <p class="site-footer__word">SwiftPune</p>
+              <p class="site-footer__tag">
+                <code>// runs on the enthusiasm of the community, good food &amp; beverages</code>
+              </p>
+            </div>
+          </div>
+
+          <nav class="site-footer__cols" aria-label="Footer">
+            <div class="footer-col">
+              <p class="footer-col__title">Show up</p>
+              <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">WhatsApp group</a>
+              <a href="/meetups">Meetups</a>
+              <a href="/students">Student outreach</a>
+              <a href="/casuals">Casuals</a>
+              <a href="/meetups#first-time">First-time visit</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Contribute</p>
+              <a href="mailto:community@swiftpune.org?subject=I%27d%20like%20to%20speak">Pitch a talk</a>
+              <a href="mailto:community@swiftpune.org?subject=Host%20SwiftPune%20at%20our%20company">Host SwiftPune</a>
+              <a href="mailto:community@swiftpune.org">Email us</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Follow</p>
+              <a href="https://www.linkedin.com/company/swiftpune/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://www.youtube.com/@SwiftPune" target="_blank" rel="noopener">YouTube</a>
+              <a href="https://www.instagram.com/swiftpune/" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://twitter.com/swiftpune" target="_blank" rel="noopener">X (Twitter)</a>
+              <a href="https://mastodon.social/@swiftpune" target="_blank" rel="noopener">Mastodon</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Care</p>
+              <a href="/code-of-conduct">Code of conduct</a>
+              <a href="mailto:community@swiftpune.org?subject=Reporting%20a%20concern">Report a concern</a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="site-footer__legal">
+          <p class="site-footer__trademark">
+            Apple, the Apple logo, Swift, the Swift logo, SwiftUI, iOS, iPadOS,
+            macOS, watchOS, visionOS and WWDC are trademarks of Apple Inc.,
+            registered in the U.S. and other countries. SwiftPune is an
+            independent, community-run group and is not affiliated with,
+            endorsed by, or sponsored by Apple Inc.
+          </p>
+          <p class="site-footer__copyline">
+            <code>
+              // © <span id="year">2026</span> SwiftPune · made in Pune · IST (UTC&nbsp;+5:30)
+            </code>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+  </body>
+</html>

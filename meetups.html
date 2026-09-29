@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      if (!location.search.includes("static")) {
+        document.documentElement.classList.add("js");
+      }
+      /* Event photos get dropped into assets/Events/… after the markup for
+         a new edition goes up, so a slot can legitimately sit empty for a
+         few days. Hide the missing image so the tinted "photos coming"
+         placeholder behind it shows through, instead of a torn-image icon
+         and sprawling alt text. Must be registered here rather than in
+         main.js — deferred scripts run after images have already failed. */
+      document.addEventListener(
+        "error",
+        function (e) {
+          if (e.target && e.target.tagName === "IMG") {
+            e.target.style.visibility = "hidden";
+          }
+        },
+        true
+      );
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#FAF7F2" />
+    <meta name="color-scheme" content="light" />
+
+    <title>Meetups — SwiftPune</title>
+    <meta
+      name="description"
+      content="SwiftPune meetups: half a weekend morning at a Pune company's office, with three 20-minute talks and a hands-on lab for people already shipping on Apple's platforms. Free, and every talk is recorded."
+    />
+    <link rel="canonical" href="https://swiftpune.org/meetups" />
+
+    <!-- Open Graph / social link previews (absolute URLs required) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SwiftPune" />
+    <meta property="og:url" content="https://swiftpune.org/meetups" />
+    <meta property="og:title" content="Meetups — SwiftPune" />
+    <meta
+      property="og:description"
+      content="SwiftPune meetups: half a weekend morning at a Pune company's office, with three 20-minute talks and a hands-on lab for people already shipping on Apple's platforms. Free, and every talk is recorded."
+    />
+    <meta property="og:image" content="https://swiftpune.org/assets/Events/S002/01.jpeg" />
+    <meta property="og:image:alt" content="Meetups — SwiftPune" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Meetups — SwiftPune" />
+    <meta
+      name="twitter:description"
+      content="SwiftPune meetups: half a weekend morning at a Pune company's office, with three 20-minute talks and a hands-on lab for people already shipping on Apple's platforms. Free, and every talk is recorded."
+    />
+    <meta name="twitter:image" content="https://swiftpune.org/assets/Events/S002/01.jpeg" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/SPLogo.png" />
+    <link rel="apple-touch-icon" href="assets/SPLogo.png" />
+
+    <link rel="preload" as="image" href="assets/SPLogo.png" fetchpriority="high" />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ===========================================================
+         Site nav — identical on every page; aria-current marks where
+         the visitor is.
+         =========================================================== -->
+    <header class="site-nav" id="siteNav" aria-label="Primary">
+      <div class="site-nav__inner">
+        <a class="brand" href="/" aria-label="SwiftPune home">
+          <span class="brand__mark">
+            <img src="assets/SPLogo.png" alt="" width="40" height="40" />
+          </span>
+          <span class="brand__word">
+            <span>SwiftPune</span>
+            <span class="brand__meta">v.2026 · Pune, IN</span>
+          </span>
+        </a>
+
+        <nav class="site-nav__links" aria-label="Sections">
+          <a href="/meetups" aria-current="page">Meetups</a>
+          <a href="/students">Students</a>
+          <a href="/casuals">Casuals</a>
+          <a href="/#core-team">Core team</a>
+          <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener" class="nav-cta">
+            Join WhatsApp
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </nav>
+
+        <button
+          class="site-nav__toggle"
+          id="navToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu" hidden>
+        <nav aria-label="Mobile sections">
+          <a href="/">Home</a>
+          <a href="/meetups" aria-current="page">Meetups</a>
+          <a href="/students">Student outreach</a>
+          <a href="/casuals">Casuals</a>
+          <a href="/#core-team">Core team</a>
+          <a href="/#sponsors">Sponsors</a>
+          <a href="#connect">Connect with us</a>
+          <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">WhatsApp group ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+
+      <!-- ===========================================================
+           Page hero — headline, then the programme's photo, which opens
+           to full width as it scrolls in (CSS scroll timeline).
+           =========================================================== -->
+      <section class="page-hero" id="top">
+        <div class="container">
+          <p class="comment-eyebrow">// program.meetups</p>
+          <h1 class="page-hero__title">Meetups, hosted by <span class="ink">Pune companies</span>.</h1>
+          <p class="lead">
+            Half a weekend morning at a host company's office: three 20-minute
+            talks, a break with real food, and a hands-on lab to close.
+            Pitched at people already shipping on Apple's platforms. Free
+            to attend, and every talk goes up on YouTube afterwards.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+              <span>Get pinged on WhatsApp</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="https://www.youtube.com/@SwiftPune" target="_blank" rel="noopener">
+              <span>Watch the talks</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="page-hero__stage">
+          <figure class="page-hero__media">
+            <img src="assets/Events/S002/02.jpeg" srcset="assets/Events/S002/02-640.jpeg 640w, assets/Events/S002/02-1024.jpeg 1024w, assets/Events/S002/02.jpeg 1280w" sizes="(max-width: 1320px) 94vw, 1240px" alt="The room at SwiftPune S002, Xplor Technologies, Kharadi" fetchpriority="high" />
+          </figure>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           PROGRAMME SECTION — Meetups
+           -----------------------------------------------------------
+           TO ADD A NEW MEETUP (S003, S004, …):
+             1. Move the current "latest edition" feature + its recap
+                into a new <li class="edition"> row in the log below,
+                keeping only its photos, lead paragraph and facts.
+             2. Drop the new edition's photos in assets/Events/S00N/
+                as 01/02/03.jpeg and point the feature gallery at them.
+             3. Update the "latest" row in the log, and the edition count
+                on the Meetups card on the homepage (index.html #work).
+           The section never changes shape — only its contents.
+           =========================================================== -->
+      <section class="section section--program section--meetups reveal" id="meetups">
+        <div class="container">
+
+          <!-- ----- Latest edition ----- -->
+          <div class="initiative">
+            <div class="initiative__media">
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/S002/01.jpeg" srcset="assets/Events/S002/01-640.jpeg 640w, assets/Events/S002/01-1024.jpeg 1024w, assets/Events/S002/01.jpeg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="SwiftPune S002 meetup at Xplor Technologies — photo 1" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/S002/02.jpeg" srcset="assets/Events/S002/02-640.jpeg 640w, assets/Events/S002/02-1024.jpeg 1024w, assets/Events/S002/02.jpeg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="SwiftPune S002 meetup at Xplor Technologies — photo 2" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/S002/03.jpeg" srcset="assets/Events/S002/03-640.jpeg 640w, assets/Events/S002/03-1024.jpeg 1024w, assets/Events/S002/03.jpeg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="SwiftPune S002 meetup at Xplor Technologies — photo 3" loading="lazy" /></figure>
+                </div>
+                <span class="gallery__scrim" aria-hidden="true"></span>
+                <div class="gallery__dots" role="group" aria-label="S002 photos">
+                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// latest edition — S002</p>
+              <h2 class="display display--feature">
+                Three talks and a <span class="ink">hands-on lab</span>.
+              </h2>
+              <p class="lead">
+                March 8, 2026, fourteen floors up in Kharadi. App
+                discoverability, CI/CD with Fastlane, and a real-world Swift 6
+                migration — then laptops out for a lab on decomposing Apple
+                platform designs.
+              </p>
+              <ul class="initiative__facts">
+                <li>
+                  <span class="initiative__fact-k">Hosted by</span>
+                  <span class="initiative__fact-v">Xplor Technologies, Kharadi</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">When</span>
+                  <span class="initiative__fact-v">Sunday, March 8, 2026</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">On the day</span>
+                  <span class="initiative__fact-v">3 talks, 1 lab, all recorded</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- ----- Latest edition: full run sheet ----- -->
+          <p class="log-label log-label--recap">// run_sheet — S002</p>
+          <div class="recap">
+            <ol class="recap__agenda" aria-label="S002 agenda">
+              <li class="recap__row recap__row--check">
+                <span class="recap__time">09:45</span>
+                <div class="recap__body">
+                  <p class="recap__type">// check_in</p>
+                  <h3 class="recap__title">Doors &amp; check-in</h3>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--talk">
+                <span class="recap__time">10:15</span>
+                <div class="recap__body">
+                  <p class="recap__type">// talk</p>
+                  <h3 class="recap__title">Make Your Apps More Discoverable</h3>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/kanishka-c/" target="_blank" rel="noopener">Kanishka Chaudhry</a>
+                    — SDE @ Upstox · 2× Apple Scholar
+                  </p>
+                  <a class="recap__link" href="https://www.youtube.com/watch?v=rjuUAT50alc" target="_blank" rel="noopener">
+                    Watch recording
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                  </a>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--sponsor">
+                <span class="recap__time">10:35</span>
+                <div class="recap__body">
+                  <p class="recap__type">// sponsor</p>
+                  <h3 class="recap__title">Stage minute — Xplor Technologies</h3>
+                  <p class="recap__by">Venue &amp; food sponsor for S002.</p>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--talk">
+                <span class="recap__time">10:50</span>
+                <div class="recap__body">
+                  <p class="recap__type">// talk</p>
+                  <h3 class="recap__title">CI/CD With GitHub Actions and Fastlane</h3>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/garimasaini0/" target="_blank" rel="noopener">Garima Saini</a>
+                    — Sr. iOS Engineer @ Xplor
+                  </p>
+                  <a class="recap__link" href="https://www.youtube.com/watch?v=QNa4UO-9G1w" target="_blank" rel="noopener">
+                    Watch recording
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                  </a>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--talk">
+                <span class="recap__time">11:10</span>
+                <div class="recap__body">
+                  <p class="recap__type">// talk</p>
+                  <h3 class="recap__title">Swift 6 Migration</h3>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/divya-maloo-72629284/" target="_blank" rel="noopener">Divya Maloo</a>
+                    (Sr. iOS @ PhonePe) &amp;
+                    <a href="https://www.linkedin.com/in/swetal-matkar-73a836204/" target="_blank" rel="noopener">Swetal Matkar</a>
+                    (iOS Developer)
+                  </p>
+                  <a class="recap__link" href="https://www.youtube.com/watch?v=LWGDs-tR6_o" target="_blank" rel="noopener">
+                    Watch recording
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                  </a>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--break">
+                <span class="recap__time">11:30</span>
+                <div class="recap__body">
+                  <p class="recap__type">// break</p>
+                  <h3 class="recap__title">Refreshments &amp; networking</h3>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--lab">
+                <span class="recap__time">12:00</span>
+                <div class="recap__body">
+                  <p class="recap__type">// lab</p>
+                  <h3 class="recap__title">Decompose Designs for Apple Platforms</h3>
+                  <p class="recap__by">
+                    <a href="https://www.linkedin.com/in/dezinezync/" target="_blank" rel="noopener">Nikhil Nigade</a>
+                    — iOS, macOS &amp; systems engineer
+                  </p>
+                  <div class="recap__repos">
+                    <a class="recap__link" href="https://github.com/dezinezync/SwiftPuneS002-Labs-Starter" target="_blank" rel="noopener">
+                      Labs · Starter
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                    </a>
+                    <a class="recap__link" href="https://github.com/dezinezync/SwiftPuneS002-Labs-Final" target="_blank" rel="noopener">
+                      Labs · Final
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </li>
+
+              <li class="recap__row recap__row--close">
+                <span class="recap__time">12:30</span>
+                <div class="recap__body">
+                  <p class="recap__type">// close</p>
+                  <h3 class="recap__title">Closing &amp; networking</h3>
+                </div>
+              </li>
+            </ol>
+
+            <aside class="recap__meta" aria-label="Venue and partners">
+              <div class="recap__meta-block">
+                <p class="recap__meta-eyebrow">// venue</p>
+                <p class="recap__meta-title">Xplor Tech1 Systems</p>
+                <p class="recap__meta-body">
+                  14th Floor, International Technology Park · Block 1,
+                  Wing 2 · Kharadi, Pune 411014
+                </p>
+                <a class="recap__meta-link" href="https://www.google.com/maps/place/Xplor+Tech1+Systems+Private+Limited/@18.5616118,73.9564067,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c34f6c6895e3:0xf4a5781b456b38a3!8m2!3d18.5616118!4d73.9564067!16s%2Fg%2F11vc7hlg62" target="_blank" rel="noopener">
+                  Open in Maps
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+
+              <div class="recap__meta-divider" aria-hidden="true"></div>
+
+              <div class="recap__meta-block">
+                <p class="recap__meta-eyebrow">// hosted_by</p>
+                <p class="recap__meta-title">Xplor Technologies</p>
+                <p class="recap__meta-body">
+                  Hosted venue and food for S002. A genuine thank-you from
+                  the SwiftPune room.
+                </p>
+                <a class="recap__meta-link" href="https://www.xplortechnologies.com" target="_blank" rel="noopener">
+                  xplortechnologies.com
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+
+              <div class="recap__meta-divider" aria-hidden="true"></div>
+
+              <div class="recap__meta-block">
+                <p class="recap__meta-eyebrow">// registration</p>
+                <a class="recap__meta-link recap__meta-link--strong" href="https://luma.com/1jb79fac" target="_blank" rel="noopener">
+                  S002 event page on Luma
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </aside>
+          </div>
+
+          <!-- ----- Every edition so far ----- -->
+          <div class="editions">
+            <p class="log-label">// editions.log</p>
+            <ol class="editions__list">
+              <li class="edition edition--latest">
+                <div class="edition__summary">
+                  <span class="edition__row">
+                    <span class="edition__node" aria-hidden="true"></span>
+                    <span class="edition__head">
+                      <span class="edition__key">S002</span>
+                      <span class="edition__name">Xplor Technologies, Kharadi</span>
+                      <span class="edition__chip">latest</span>
+                    </span>
+                    <span class="edition__meta">Mar 8, 2026</span>
+                  </span>
+                </div>
+              </li>
+
+              <li class="edition">
+                <details class="edition__box">
+                  <summary class="edition__summary">
+                    <span class="edition__row">
+                      <span class="edition__node" aria-hidden="true"></span>
+                      <span class="edition__head">
+                        <span class="edition__key">S001</span>
+                        <span class="edition__name">EPAM Systems, Pune</span>
+                      </span>
+                      <span class="edition__meta">Nov 24, 2025</span>
+                      <span class="edition__chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </span>
+                    </span>
+                  </summary>
+                  <div class="edition__detail">
+                    <div class="edition__media">
+                      <div class="gallery" data-gallery>
+                        <div class="gallery__track">
+                          <figure class="gallery__slide"><img src="assets/Events/S001/01.jpeg" srcset="assets/Events/S001/01-640.jpeg 640w, assets/Events/S001/01-1024.jpeg 1024w, assets/Events/S001/01.jpeg 1280w" sizes="(max-width: 1024px) 88vw, 500px" alt="SwiftPune's first meetup, S001 — photo 1" loading="lazy" /></figure>
+                          <figure class="gallery__slide"><img src="assets/Events/S001/02.jpeg" srcset="assets/Events/S001/02-640.jpeg 640w, assets/Events/S001/02-1024.jpeg 1024w, assets/Events/S001/02.jpeg 1280w" sizes="(max-width: 1024px) 88vw, 500px" alt="SwiftPune's first meetup, S001 — photo 2" loading="lazy" /></figure>
+                          <figure class="gallery__slide"><img src="assets/Events/S001/03.jpeg" srcset="assets/Events/S001/03-640.jpeg 640w, assets/Events/S001/03-1024.jpeg 1024w, assets/Events/S001/03.jpeg 1280w" sizes="(max-width: 1024px) 88vw, 500px" alt="SwiftPune's first meetup, S001 — photo 3" loading="lazy" /></figure>
+                        </div>
+                        <span class="gallery__scrim" aria-hidden="true"></span>
+                        <div class="gallery__dots" role="group" aria-label="S001 photos">
+                          <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                          <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                          <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="edition__text">
+                      <p>
+                        SwiftPune began as a single question — is there a room
+                        in Pune for the people who build on Apple's platforms?
+                        S001 was the answer. EPAM Systems gave us the space, a
+                        handful of developers gave the talks, and a roomful of
+                        strangers left as a community that wanted to come back.
+                      </p>
+                      <ul class="edition__facts">
+                        <li>
+                          <span class="initiative__fact-k">Hosted by</span>
+                          <span class="initiative__fact-v">EPAM Systems, Pune</span>
+                        </li>
+                        <li>
+                          <span class="initiative__fact-k">On the day</span>
+                          <span class="initiative__fact-v">Talks, then hallway conversations that ran long</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </details>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           How to actually turn up
+           =========================================================== -->
+      <section class="section section--attend reveal" id="attend">
+        <div class="container">
+          <div class="attend">
+            <p class="comment-eyebrow">// meetup()</p>
+            <h2 class="display">
+              Find us on a <span class="ink">weekend</span>.
+            </h2>
+            <p class="lead">
+              Each meetup lands on LinkedIn and Luma a couple of weeks
+              ahead. The fastest heads-up is the WhatsApp group — that's
+              where times, venues, and RSVPs drop first. A meetup runs
+              about three hours, much like the S002 run sheet above.
+            </p>
+            <div class="meetups__cta">
+            <a class="btn btn--primary" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+              <span>Get pinged on WhatsApp</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="mailto:community@swiftpune.org?subject=Host%20SwiftPune%20at%20our%20company">
+              <span>Host a meetup at your company</span>
+            </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           First time? — onboarding for newer/younger devs
+           =========================================================== -->
+      <section class="section section--first reveal" id="first-time">
+        <span class="bubble bubble--accent bubble--first" aria-hidden="true"></span>
+        <div class="container container--narrow">
+          <header class="section-head">
+            <p class="comment-eyebrow">// first.commit</p>
+            <h2 class="display">
+              Coming for the <span class="ink">first time</span>?
+            </h2>
+            <p class="lead">
+              Two minutes of reading. Three things to know before you walk in
+              — in the order they'll happen.
+            </p>
+          </header>
+
+          <ol class="onboard" aria-label="What to know on your first visit">
+            <li class="onboard__step">
+              <div class="onboard__rail" aria-hidden="true">
+                <span class="onboard__num">01</span>
+              </div>
+              <div class="onboard__body">
+                <p class="onboard__eyebrow">// pack</p>
+                <h3 class="onboard__title">Bring a laptop, your questions, an opinion.</h3>
+                <p class="onboard__text">
+                  The opinion is the important one. Even a wrong one starts a
+                  better conversation than no opinion.
+                </p>
+              </div>
+            </li>
+
+            <li class="onboard__step">
+              <div class="onboard__rail" aria-hidden="true">
+                <span class="onboard__num">02</span>
+              </div>
+              <div class="onboard__body">
+                <p class="onboard__eyebrow">// wear</p>
+                <h3 class="onboard__title">Whatever you'd wear to work or to a college fest.</h3>
+                <p class="onboard__text">
+                  Both fit. We're not a uniform crowd.
+                </p>
+              </div>
+            </li>
+
+            <li class="onboard__step">
+              <div class="onboard__rail" aria-hidden="true">
+                <span class="onboard__num">03</span>
+              </div>
+              <div class="onboard__body">
+                <p class="onboard__eyebrow">// hello round</p>
+                <h3 class="onboard__title">We open with introductions.</h3>
+                <p class="onboard__text">
+                  Name, what you build (or want to build), one thing you're
+                  stuck on this week. Nobody's a stranger by talk #1.
+                </p>
+              </div>
+            </li>
+
+          </ol>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Connect — the same block closes every page.
+           =========================================================== -->
+      <section class="section section--connect reveal" id="connect" aria-labelledby="connect-title">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// connect</p>
+            <h2 class="display" id="connect-title">
+              Come say <span class="ink">hello</span>.
+            </h2>
+            <p class="lead">
+              Every meetup, campus session and casual is announced in the
+              WhatsApp group first. The rest are for catching up on what
+              you missed.
+            </p>
+          </header>
+
+          <ul class="connect">
+            <li class="connect__item connect__item--primary">
+              <a class="connect__link" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#whatsapp"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">Join the WhatsApp group</span>
+                <span class="connect__desc">Event dates, venues and RSVPs land here before anywhere else.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.linkedin.com/company/swiftpune/" target="_blank" rel="noopener" style="--brand: #0A66C2">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#linkedin"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">LinkedIn</span>
+                <span class="connect__desc">Announcements and event recaps.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.youtube.com/@SwiftPune" target="_blank" rel="noopener" style="--brand: #FF0000">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#youtube"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">YouTube</span>
+                <span class="connect__desc">Every meetup talk, recorded.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.instagram.com/swiftpune/" target="_blank" rel="noopener" style="--brand: #E4405F">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#instagram"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">Instagram</span>
+                <span class="connect__desc">Photos from our events.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://twitter.com/swiftpune" target="_blank" rel="noopener" style="--brand: #000000">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#x"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">X (Twitter)</span>
+                <span class="connect__desc">Quick updates from the community.</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =============================================================
+         Footer
+         ============================================================= -->
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <div class="site-footer__cluster">
+          <div class="site-footer__brand">
+            <img src="assets/SPLogo.png" alt="" width="52" height="52" />
+            <div>
+              <p class="site-footer__word">SwiftPune</p>
+              <p class="site-footer__tag">
+                <code>// runs on the enthusiasm of the community, good food &amp; beverages</code>
+              </p>
+            </div>
+          </div>
+
+          <nav class="site-footer__cols" aria-label="Footer">
+            <div class="footer-col">
+              <p class="footer-col__title">Show up</p>
+              <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">WhatsApp group</a>
+              <a href="/meetups">Meetups</a>
+              <a href="/students">Student outreach</a>
+              <a href="/casuals">Casuals</a>
+              <a href="/meetups#first-time">First-time visit</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Contribute</p>
+              <a href="mailto:community@swiftpune.org?subject=I%27d%20like%20to%20speak">Pitch a talk</a>
+              <a href="mailto:community@swiftpune.org?subject=Host%20SwiftPune%20at%20our%20company">Host SwiftPune</a>
+              <a href="mailto:community@swiftpune.org">Email us</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Follow</p>
+              <a href="https://www.linkedin.com/company/swiftpune/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://www.youtube.com/@SwiftPune" target="_blank" rel="noopener">YouTube</a>
+              <a href="https://www.instagram.com/swiftpune/" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://twitter.com/swiftpune" target="_blank" rel="noopener">X (Twitter)</a>
+              <a href="https://mastodon.social/@swiftpune" target="_blank" rel="noopener">Mastodon</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Care</p>
+              <a href="/code-of-conduct">Code of conduct</a>
+              <a href="mailto:community@swiftpune.org?subject=Reporting%20a%20concern">Report a concern</a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="site-footer__legal">
+          <p class="site-footer__trademark">
+            Apple, the Apple logo, Swift, the Swift logo, SwiftUI, iOS, iPadOS,
+            macOS, watchOS, visionOS and WWDC are trademarks of Apple Inc.,
+            registered in the U.S. and other countries. SwiftPune is an
+            independent, community-run group and is not affiliated with,
+            endorsed by, or sponsored by Apple Inc.
+          </p>
+          <p class="site-footer__copyline">
+            <code>
+              // © <span id="year">2026</span> SwiftPune · made in Pune · IST (UTC&nbsp;+5:30)
+            </code>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+  </body>
+</html>
