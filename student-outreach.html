@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      if (!location.search.includes("static")) {
+        document.documentElement.classList.add("js");
+      }
+      /* Event photos get dropped into assets/Events/… after the markup for
+         a new edition goes up, so a slot can legitimately sit empty for a
+         few days. Hide the missing image so the tinted "photos coming"
+         placeholder behind it shows through, instead of a torn-image icon
+         and sprawling alt text. Must be registered here rather than in
+         main.js — deferred scripts run after images have already failed. */
+      document.addEventListener(
+        "error",
+        function (e) {
+          if (e.target && e.target.tagName === "IMG") {
+            e.target.style.visibility = "hidden";
+          }
+        },
+        true
+      );
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#FAF7F2" />
+    <meta name="color-scheme" content="light" />
+
+    <title>Student outreach — SwiftPune</title>
+    <meta
+      name="description"
+      content="SwiftPune's Swift Student Outreach: we run sessions on Swift and SwiftUI inside Pune's colleges and universities, for students who haven't opened Xcode yet."
+    />
+    <link rel="canonical" href="https://swiftpune.org/student-outreach" />
+
+    <!-- Open Graph / social link previews (absolute URLs required) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SwiftPune" />
+    <meta property="og:url" content="https://swiftpune.org/student-outreach" />
+    <meta property="og:title" content="Student outreach — SwiftPune" />
+    <meta
+      property="og:description"
+      content="SwiftPune's Swift Student Outreach: we run sessions on Swift and SwiftUI inside Pune's colleges and universities, for students who haven't opened Xcode yet."
+    />
+    <meta property="og:image" content="https://swiftpune.org/assets/Events/student-outreach/bharati-vidyapeeth-2026/01.jpg" />
+    <meta property="og:image:alt" content="Student outreach — SwiftPune" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Student outreach — SwiftPune" />
+    <meta
+      name="twitter:description"
+      content="SwiftPune's Swift Student Outreach: we run sessions on Swift and SwiftUI inside Pune's colleges and universities, for students who haven't opened Xcode yet."
+    />
+    <meta name="twitter:image" content="https://swiftpune.org/assets/Events/student-outreach/bharati-vidyapeeth-2026/01.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/SPLogo.png" />
+    <link rel="apple-touch-icon" href="assets/SPLogo.png" />
+
+    <link rel="preload" as="image" href="assets/SPLogo.png" fetchpriority="high" />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ===========================================================
+         Site nav — identical on every page; aria-current marks where
+         the visitor is.
+         =========================================================== -->
+    <header class="site-nav" id="siteNav" aria-label="Primary">
+      <div class="site-nav__inner">
+        <a class="brand" href="/" aria-label="SwiftPune home">
+          <span class="brand__mark">
+            <img src="assets/SPLogo.png" alt="" width="40" height="40" />
+          </span>
+          <span class="brand__word">
+            <span>SwiftPune</span>
+            <span class="brand__meta">v.2026 · Pune, IN</span>
+          </span>
+        </a>
+
+        <nav class="site-nav__links" aria-label="Sections">
+          <a href="/meetups">Meetups</a>
+          <a href="/student-outreach" aria-current="page">Students</a>
+          <a href="/casuals">Casuals</a>
+          <a href="/#core-team">Core team</a>
+          <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener" class="nav-cta">
+            Join WhatsApp
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </nav>
+
+        <button
+          class="site-nav__toggle"
+          id="navToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu" hidden>
+        <nav aria-label="Mobile sections">
+          <a href="/">Home</a>
+          <a href="/meetups">Meetups</a>
+          <a href="/student-outreach" aria-current="page">Student outreach</a>
+          <a href="/casuals">Casuals</a>
+          <a href="/#core-team">Core team</a>
+          <a href="/#sponsors">Sponsors</a>
+          <a href="#connect">Connect with us</a>
+          <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">WhatsApp group ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+
+      <!-- ===========================================================
+           Page hero — headline, then the programme's photo, which opens
+           to full width as it scrolls in (CSS scroll timeline).
+           =========================================================== -->
+      <section class="page-hero" id="top">
+        <div class="container">
+          <p class="comment-eyebrow">// program.student_outreach</p>
+          <h1 class="page-hero__title">Swift, taken to <span class="ink">campus</span>.</h1>
+          <p class="lead">
+            Most students won't travel across the city for a weekend
+            meetup, so we go to them instead. Faculty book the hall, we
+            bring the people who build on Apple's platforms for a living,
+            and the session runs for whoever turns up — mostly people who
+            haven't opened Xcode yet.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="https://forms.gle/CeZP6YjRmobC9hE4A" target="_blank" rel="noopener">
+              <span>Bring SwiftPune to your campus</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+              <span>Join the WhatsApp group</span>
+            </a>
+          </div>
+        </div>
+        <div class="page-hero__stage">
+          <figure class="page-hero__media">
+            <img src="assets/Events/student-outreach/bharati-vidyapeeth-2026/02.jpg" srcset="assets/Events/student-outreach/bharati-vidyapeeth-2026/02-640.jpg 640w, assets/Events/student-outreach/bharati-vidyapeeth-2026/02-1024.jpg 1024w, assets/Events/student-outreach/bharati-vidyapeeth-2026/02.jpg 1280w" sizes="(max-width: 1320px) 94vw, 1240px" alt="Abhishek Shinde presenting to students at Bharati Vidyapeeth" fetchpriority="high" />
+          </figure>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           PROGRAMME SECTION — Swift Student Outreach
+           -----------------------------------------------------------
+           TO ADD A NEW CAMPUS SESSION: same three steps as Meetups
+           above. Photos live in assets/Events/student-outreach/<slug>/
+           as 01/02/03.jpeg.
+           =========================================================== -->
+      <section class="section section--program section--outreach reveal" id="outreach">
+        <div class="container">
+
+          <!-- ----- Latest session ----- -->
+          <div class="initiative initiative--flip">
+            <div class="initiative__media">
+              <div class="gallery" data-gallery>
+                <div class="gallery__track">
+                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/bharati-vidyapeeth-2026/01.jpg" srcset="assets/Events/student-outreach/bharati-vidyapeeth-2026/01-640.jpg 640w, assets/Events/student-outreach/bharati-vidyapeeth-2026/01-1024.jpg 1024w, assets/Events/student-outreach/bharati-vidyapeeth-2026/01.jpg 1112w" sizes="(max-width: 900px) 92vw, 600px" alt="Get Started with iOS Development — Swift, SwiftUI, and Beyond, on stage at Bharati Vidyapeeth" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/bharati-vidyapeeth-2026/02.jpg" srcset="assets/Events/student-outreach/bharati-vidyapeeth-2026/02-640.jpg 640w, assets/Events/student-outreach/bharati-vidyapeeth-2026/02-1024.jpg 1024w, assets/Events/student-outreach/bharati-vidyapeeth-2026/02.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="Abhishek Shinde presenting Day in the Life to students at Bharati Vidyapeeth" loading="lazy" /></figure>
+                  <figure class="gallery__slide"><img src="assets/Events/student-outreach/bharati-vidyapeeth-2026/03.jpg" srcset="assets/Events/student-outreach/bharati-vidyapeeth-2026/03-640.jpg 640w, assets/Events/student-outreach/bharati-vidyapeeth-2026/03-1024.jpg 1024w, assets/Events/student-outreach/bharati-vidyapeeth-2026/03.jpg 1280w" sizes="(max-width: 900px) 92vw, 600px" alt="The SwiftPune crew with IMED faculty after the session" loading="lazy" /></figure>
+                </div>
+                <span class="gallery__scrim" aria-hidden="true"></span>
+                <div class="gallery__dots" role="group" aria-label="Bharati Vidyapeeth session photos">
+                  <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                  <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// latest session — Bharati Vidyapeeth</p>
+              <h2 class="display display--feature">
+                Get started with <span class="ink">iOS development</span>.
+              </h2>
+              <p class="lead">
+                A full session at Bharati Vidyapeeth's Institute of Management
+                and Entrepreneurship Development, on Swift, SwiftUI and what
+                comes after — closing with Abhishek Shinde on what a working
+                iOS developer's day actually looks like.
+              </p>
+              <ul class="initiative__facts">
+                <li>
+                  <span class="initiative__fact-k">Campus</span>
+                  <span class="initiative__fact-v">Institute of Management &amp; Entrepreneurship Development, Bharati Vidyapeeth, Pune</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">When</span>
+                  <span class="initiative__fact-v">Saturday, July 25, 2026</span>
+                </li>
+                <li>
+                  <span class="initiative__fact-k">Session</span>
+                  <span class="initiative__fact-v">Get Started with iOS Development — Swift, SwiftUI, and Beyond</span>
+                </li>
+              </ul>
+              <p class="initiative__note">
+                <a class="link" href="https://forms.gle/CeZP6YjRmobC9hE4A" target="_blank" rel="noopener">
+                  Bring SwiftPune to your campus
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <!-- ----- Every session so far ----- -->
+          <div class="editions">
+            <p class="log-label">// sessions.log</p>
+            <ol class="editions__list">
+              <li class="edition edition--latest">
+                <div class="edition__summary">
+                  <span class="edition__row">
+                    <span class="edition__node" aria-hidden="true"></span>
+                    <span class="edition__head">
+                      <span class="edition__key">02</span>
+                      <span class="edition__name">Bharati Vidyapeeth (IMED), Pune</span>
+                      <span class="edition__chip">latest</span>
+                    </span>
+                    <span class="edition__meta">Jul 25, 2026</span>
+                  </span>
+                </div>
+              </li>
+
+              <li class="edition">
+                <details class="edition__box" open>
+                  <summary class="edition__summary">
+                    <span class="edition__row">
+                      <span class="edition__node" aria-hidden="true"></span>
+                      <span class="edition__head">
+                        <span class="edition__key">01</span>
+                        <span class="edition__name">Vishwakarma University, Pune</span>
+                      </span>
+                      <span class="edition__meta">Apr 2026</span>
+                      <span class="edition__chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </span>
+                    </span>
+                  </summary>
+                  <div class="edition__detail">
+                    <div class="edition__media">
+                      <div class="gallery" data-gallery>
+                        <div class="gallery__track">
+                          <figure class="gallery__slide"><img src="assets/Events/student-outreach/vu-april-2026/01.jpeg" srcset="assets/Events/student-outreach/vu-april-2026/01-640.jpeg 640w, assets/Events/student-outreach/vu-april-2026/01-1024.jpeg 1024w, assets/Events/student-outreach/vu-april-2026/01.jpeg 1280w" sizes="(max-width: 1024px) 88vw, 500px" alt="Swift Student Outreach at Vishwakarma University — photo 1" loading="lazy" /></figure>
+                          <figure class="gallery__slide"><img src="assets/Events/student-outreach/vu-april-2026/02.jpeg" srcset="assets/Events/student-outreach/vu-april-2026/02-640.jpeg 640w, assets/Events/student-outreach/vu-april-2026/02-1024.jpeg 1024w, assets/Events/student-outreach/vu-april-2026/02.jpeg 1280w" sizes="(max-width: 1024px) 88vw, 500px" alt="Swift Student Outreach at Vishwakarma University — photo 2" loading="lazy" /></figure>
+                          <figure class="gallery__slide"><img src="assets/Events/student-outreach/vu-april-2026/03.jpeg" srcset="assets/Events/student-outreach/vu-april-2026/03-640.jpeg 640w, assets/Events/student-outreach/vu-april-2026/03-1024.jpeg 1024w, assets/Events/student-outreach/vu-april-2026/03.jpeg 1280w" sizes="(max-width: 1024px) 88vw, 500px" alt="Swift Student Outreach at Vishwakarma University — photo 3" loading="lazy" /></figure>
+                        </div>
+                        <span class="gallery__scrim" aria-hidden="true"></span>
+                        <div class="gallery__dots" role="group" aria-label="Vishwakarma University session photos">
+                          <button class="gallery__dot is-active" type="button" aria-label="Show photo 1 of 3"><span class="gallery__dot-fill"></span></button>
+                          <button class="gallery__dot" type="button" aria-label="Show photo 2 of 3"><span class="gallery__dot-fill"></span></button>
+                          <button class="gallery__dot" type="button" aria-label="Show photo 3 of 3"><span class="gallery__dot-fill"></span></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="edition__text">
+                      <p>
+                        The one that started the programme. We ran the first
+                        campus session at Vishwakarma University, Pune —
+                        hands-on Swift for students where they already study,
+                        which turned out to work far better than asking them
+                        to find us on a weekend.
+                      </p>
+                      <ul class="edition__facts">
+                        <li>
+                          <span class="initiative__fact-k">Campus</span>
+                          <span class="initiative__fact-v">Vishwakarma University, Pune</span>
+                        </li>
+                        <li>
+                          <span class="initiative__fact-k">For</span>
+                          <span class="initiative__fact-v">Students getting started with Swift &amp; SwiftUI</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </details>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Connect — the same block closes every page.
+           =========================================================== -->
+      <section class="section section--connect reveal" id="connect" aria-labelledby="connect-title">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// connect</p>
+            <h2 class="display" id="connect-title">
+              Come say <span class="ink">hello</span>.
+            </h2>
+            <p class="lead">
+              Every meetup, campus session and casual is announced in the
+              WhatsApp group first. The rest are for catching up on what
+              you missed.
+            </p>
+          </header>
+
+          <ul class="connect">
+            <li class="connect__item connect__item--primary">
+              <a class="connect__link" href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#whatsapp"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">Join the WhatsApp group</span>
+                <span class="connect__desc">Event dates, venues and RSVPs land here before anywhere else.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.linkedin.com/company/swiftpune/" target="_blank" rel="noopener" style="--brand: #0A66C2">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#linkedin"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">LinkedIn</span>
+                <span class="connect__desc">Announcements and event recaps.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.youtube.com/@SwiftPune" target="_blank" rel="noopener" style="--brand: #FF0000">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#youtube"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">YouTube</span>
+                <span class="connect__desc">Every meetup talk, recorded.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://www.instagram.com/swiftpune/" target="_blank" rel="noopener" style="--brand: #E4405F">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#instagram"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">Instagram</span>
+                <span class="connect__desc">Photos from our events.</span>
+              </a>
+            </li>
+            <li class="connect__item">
+              <a class="connect__link" href="https://twitter.com/swiftpune" target="_blank" rel="noopener" style="--brand: #000000">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#x"/></svg>
+                <span class="connect__go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                <span class="connect__name">X (Twitter)</span>
+                <span class="connect__desc">Quick updates from the community.</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =============================================================
+         Footer
+         ============================================================= -->
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <div class="site-footer__cluster">
+          <div class="site-footer__brand">
+            <img src="assets/SPLogo.png" alt="" width="52" height="52" />
+            <div>
+              <p class="site-footer__word">SwiftPune</p>
+              <p class="site-footer__tag">
+                <code>// runs on the enthusiasm of the community, good food &amp; beverages</code>
+              </p>
+            </div>
+          </div>
+
+          <nav class="site-footer__cols" aria-label="Footer">
+            <div class="footer-col">
+              <p class="footer-col__title">Show up</p>
+              <a href="https://chat.whatsapp.com/FbfE8mr1aIA8Ac97EHV4yw" target="_blank" rel="noopener">WhatsApp group</a>
+              <a href="/meetups">Meetups</a>
+              <a href="/student-outreach">Student outreach</a>
+              <a href="/casuals">Casuals</a>
+              <a href="/meetups#first-time">First-time visit</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Contribute</p>
+              <a href="mailto:community@swiftpune.org?subject=I%27d%20like%20to%20speak">Pitch a talk</a>
+              <a href="mailto:community@swiftpune.org?subject=Host%20SwiftPune%20at%20our%20company">Host SwiftPune</a>
+              <a href="mailto:community@swiftpune.org">Email us</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Follow</p>
+              <a href="https://www.linkedin.com/company/swiftpune/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://www.youtube.com/@SwiftPune" target="_blank" rel="noopener">YouTube</a>
+              <a href="https://www.instagram.com/swiftpune/" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://twitter.com/swiftpune" target="_blank" rel="noopener">X (Twitter)</a>
+              <a href="https://mastodon.social/@swiftpune" target="_blank" rel="noopener">Mastodon</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Care</p>
+              <a href="/code-of-conduct">Code of conduct</a>
+              <a href="mailto:community@swiftpune.org?subject=Reporting%20a%20concern">Report a concern</a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="site-footer__legal">
+          <p class="site-footer__trademark">
+            Apple, the Apple logo, Swift, the Swift logo, SwiftUI, iOS, iPadOS,
+            macOS, watchOS, visionOS and WWDC are trademarks of Apple Inc.,
+            registered in the U.S. and other countries. SwiftPune is an
+            independent, community-run group and is not affiliated with,
+            endorsed by, or sponsored by Apple Inc.
+          </p>
+          <p class="site-footer__copyline">
+            <code>
+              // © <span id="year">2026</span> SwiftPune · made in Pune · IST (UTC&nbsp;+5:30)
+            </code>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+  </body>
+</html>
