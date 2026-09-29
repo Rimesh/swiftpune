@@ -24,7 +24,7 @@ rather than mission statements.
 | --- | --- | --- |
 | Home | `index.html` | Hero, one card per programme, core team, sponsors |
 | Meetups | `meetups.html` (`/meetups`) | Latest edition, its run sheet, every edition, first-timer notes |
-| Student outreach | `students.html` (`/students`) | Latest campus session, every session |
+| Student outreach | `student-outreach.html` (`/student-outreach`) | Latest campus session, every session |
 | Casuals | `casuals.html` (`/casuals`) | How casuals work, latest casual, every casual, the annual WWDC watch party |
 
 Cloudflare serves each `*.html` file at its extensionless path. Every page
@@ -41,7 +41,7 @@ every earlier one:
 | Programme | Page | Photos live in |
 | --- | --- | --- |
 | Meetups | `meetups.html` | `assets/Events/S00N/` |
-| Swift Student Outreach | `students.html` | `assets/Events/student-outreach/<campus-slug>/` |
+| Swift Student Outreach | `student-outreach.html` | `assets/Events/student-outreach/<campus-slug>/` |
 | Casuals | `casuals.html` | `assets/Events/Casuals/00N/` |
 | WWDC watch party | `casuals.html#wwdc` | `assets/Events/watchparty/<year>/` |
 
