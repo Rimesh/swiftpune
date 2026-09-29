@@ -1,0 +1,41 @@
+
+      <!-- ===========================================================
+           Connect — the same block closes every page. Channels and
+           links live in src/_data/site.js.
+           =========================================================== -->
+      <section class="section section--connect reveal" id="connect" aria-labelledby="connect-title">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// connect</p>
+            <h2 class="display" id="connect-title">
+              Come say <span class="ink">hello</span>.
+            </h2>
+            <p class="lead">
+              Every meetup, campus session and casual is announced in the
+              WhatsApp group first. The rest are for catching up on what
+              you missed.
+            </p>
+          </header>
+
+          <ul class="connect">
+            <li class="connect__item connect__item--primary">
+              <a class="connect__link" href="{{ site.whatsapp }}" target="_blank" rel="noopener">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#whatsapp"/></svg>
+                <span class="connect__go" aria-hidden="true">{% arrow %}</span>
+                <span class="connect__name">Join the WhatsApp group</span>
+                <span class="connect__desc">Event dates, venues and RSVPs land here before anywhere else.</span>
+              </a>
+            </li>
+            {%- for ch in site.channels %}
+            <li class="connect__item">
+              <a class="connect__link" href="{{ site[ch.key] }}" target="_blank" rel="noopener" style="--brand: {{ ch.brand }}">
+                <svg class="connect__icon" aria-hidden="true"><use href="assets/icons.svg#{{ ch.icon }}"/></svg>
+                <span class="connect__go" aria-hidden="true">{% arrow %}</span>
+                <span class="connect__name">{{ ch.name }}</span>
+                <span class="connect__desc">{{ ch.desc }}</span>
+              </a>
+            </li>
+            {%- endfor %}
+          </ul>
+        </div>
+      </section>

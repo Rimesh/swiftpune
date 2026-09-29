@@ -1,0 +1,92 @@
+---
+layout: layouts/base.njk
+permalink: casuals.html
+nav: casuals
+title: Casuals — SwiftPune
+description: "SwiftPune casuals: once a month, a weekend brunch in Pune with no talks and no agenda. Meet the community, talk about what you're building, split the bill. Students welcome."
+ogImage: assets/Events/Casuals/002/01.jpg
+habits:
+  - key: "// when"
+    title: Once a month, over brunch.
+    text: A weekend brunch at a restaurant somewhere in Pune. The place and time go up in the WhatsApp group first.
+  - key: "// agenda"
+    title: Meet people. That's it.
+    text: No talks and no slides. Tell people what you're building, hear what they are, and get to know the community.
+  - key: "// the bill"
+    title: We split it.
+    text: There's no ticket. Everyone pays their share of the bill at the table.
+  - key: "// who"
+    title: Students welcome.
+    text: Working developers, designers, students, the curious. You don't need to have come to a meetup first.
+---
+{#- Casuals and watch parties live in src/_data/casuals.js — add them there. -#}
+{%- import "macros/events.njk" as ev with context %}
+{%- set latest = casuals.events[0] %}
+{%- set annual = casuals.annual %}
+{{ ev.hero(
+  "// program.casuals",
+  'No talks. Just <span class="ink">brunch</span>.',
+  "Once a month we take a long table at a restaurant in Pune and
+            spend a weekend brunch together. No agenda beyond meeting each
+            other: talk about what you're building, hear what everyone else
+            is up to, and put faces to the names in the group chat.",
+  latest.photos.items[0],
+  null,
+  [
+    { href: site.whatsapp, label: "Join the next one on WhatsApp", primary: true },
+    { href: "#wwdc", label: "The WWDC watch party", arrow: false }
+  ]
+) }}
+
+      <!-- ===========================================================
+           How a casual works
+           =========================================================== -->
+      <section class="section section--program reveal" id="how">
+        <div class="container">
+          <ul class="habits" aria-label="How a casual works">
+            {%- for h in habits %}
+            <li class="habits__item">
+              <p class="habits__key">{{ h.key }}</p>
+              <h2 class="habits__title">{{ h.title }}</h2>
+              <p class="habits__text">{{ h.text }}</p>
+            </li>
+            {%- endfor %}
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Casuals — latest casual, then every casual.
+           =========================================================== -->
+      <section class="section section--program section--casuals reveal" id="casuals">
+        <div class="container">
+{{ ev.feature(latest, casuals.latestLabel) }}
+
+{{ ev.log(casuals.events, casuals.logLabel) }}
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Annual special — the WWDC watch party.
+           =========================================================== -->
+      <section class="section section--program section--casuals section--annual reveal" id="wwdc">
+        <div class="container">
+          <header class="section-head annual-head">
+            <p class="comment-eyebrow">// once_a_year</p>
+            <h2 class="display">
+              One night a year, we just <span class="ink">watch</span>.
+            </h2>
+            <p class="lead">
+              The one casual with a screen in it. Every June the community
+              gets in one room for the WWDC keynote and reacts to it
+              together, which is still the best way to watch it.
+            </p>
+          </header>
+
+{{ ev.feature(annual.events[0], annual.latestLabel, true, "h3") }}
+{%- if annual.events.length > 1 %}
+
+{{ ev.log(annual.events, annual.logLabel) }}
+{%- endif %}
+        </div>
+      </section>

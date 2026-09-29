@@ -18,37 +18,46 @@ visionOS, and server-side Swift) in Pune, India.
 It leads with our actual work — meetups, campus outreach, and casuals —
 rather than mission statements.
 
-## Pages
+## Working on the site
 
-| Page | File | What's on it |
-| --- | --- | --- |
-| Home | `index.html` | Hero, one card per programme, core team, sponsors |
-| Meetups | `meetups.html` (`/meetups`) | Latest edition, its run sheet, every edition, first-timer notes |
-| Student outreach | `student-outreach.html` (`/student-outreach`) | Latest campus session, every session |
-| Casuals | `casuals.html` (`/casuals`) | How casuals work, latest casual, every casual, the annual WWDC watch party |
+The site is built with [Eleventy](https://www.11ty.dev/). Pages are
+templates in `src/`, and everything that repeats lives in one place:
 
-Cloudflare serves each `*.html` file at its extensionless path. Every page
-ends with the same **Connect** block (WhatsApp, LinkedIn, YouTube, Instagram,
-X); its icons live in `assets/icons.svg`. To preview locally with the same
-clean URLs, use any static server that maps `/meetups` to `meetups.html`
-(for example `npx wrangler dev`).
+| To change… | Edit |
+| --- | --- |
+| A meetup, campus session, casual or watch party | `src/_data/meetups.js`, `outreach.js` or `casuals.js` |
+| Links (WhatsApp, socials, email, forms) or the nav | `src/_data/site.js` |
+| Nav, Connect block or footer markup | `src/_includes/partials/` |
+| The `<head>` and page shell | `src/_includes/layouts/base.njk` |
+| How events render (gallery, feature, log, run sheet) | `src/_includes/macros/events.njk` |
+| Page copy | `src/index.njk`, `meetups.njk`, `student-outreach.njk`, `casuals.njk`, `code-of-conduct.njk` |
+| Styles, scripts, images | `css/`, `js/`, `assets/` (copied as-is) |
+
+```sh
+npm install
+npm start        # http://localhost:8080, rebuilds on save
+npm run build    # writes the site to _site/
+```
+
+`/meetups`, `/student-outreach` and `/casuals` are served from
+`meetups.html` etc. — by Cloudflare in production and by the dev server
+locally. Cloudflare runs `npm run build` on every deploy (see
+`wrangler.jsonc`) and serves `_site/`.
 
 ## Adding an event
 
-Each programme page is a featured **latest** event followed by a log of
-every earlier one:
+Each programme page features its **latest** event and logs every earlier
+one. Both come from that programme's data file, newest first:
 
-| Programme | Page | Photos live in |
+| Programme | Data file | Photos live in |
 | --- | --- | --- |
-| Meetups | `meetups.html` | `assets/Events/S00N/` |
-| Swift Student Outreach | `student-outreach.html` | `assets/Events/student-outreach/<campus-slug>/` |
-| Casuals | `casuals.html` | `assets/Events/Casuals/00N/` |
-| WWDC watch party | `casuals.html#wwdc` | `assets/Events/watchparty/<year>/` |
+| Meetups | `src/_data/meetups.js` | `assets/Events/S00N/` |
+| Swift Student Outreach | `src/_data/outreach.js` | `assets/Events/student-outreach/<campus-slug>/` |
+| Casuals | `src/_data/casuals.js` (`events`) | `assets/Events/Casuals/00N/` |
+| WWDC watch party | `src/_data/casuals.js` (`annual`) | `assets/Events/watchparty/<year>/` |
 
-To add an event:
-
-1. Drop up to three photos in that programme's folder as `01`, `02`, `03`, then
-   size them. Originals cap at 1280px wide, with `-1024` and `-640`
+1. Drop up to three photos in that programme's folder as `01`, `02`, `03`,
+   then size them. Originals cap at 1280px wide, with `-1024` and `-640`
    variants beside them for `srcset`:
 
    ```sh
@@ -60,19 +69,14 @@ To add an event:
    done
    ```
 
-   Use the file's real pixel width as the largest `srcset` descriptor —
-   if an original is already under 1280 it stays that size, and the
-   descriptor should say so rather than claiming `1280w`.
-2. Demote the current featured event into a new `<li class="edition">`
-   row at the top of the log, keeping its photos, write-up and facts.
-   Remove its `edition--latest` class and give it a `<details open>` wrapper
-   (past events show expanded; visitors can still collapse them).
-3. Put the new event in the feature slot and mark its log row
-   `edition--latest`.
-4. Update the count on that programme's card in `index.html` (`#work`).
+   If an original is narrower than 1280px, pass its real width to the
+   photo helper, e.g. `C001(1, "Alt text", { width: 960, variants: [640] })`.
+2. Add an entry to the **top** of that file's `events` list — copy the
+   entry below it and change the details.
 
-Nothing else moves, and the page only grows by one collapsed row per event.
-The section comments in `index.html` restate these steps in place.
+That's the whole job. The previous event moves into the log (shown
+expanded), and the homepage card's count and "latest" date, the hosts
+list and the next open host slot all update on the next build.
 
 ## Get involved
 
