@@ -65,7 +65,8 @@ To add an event:
    descriptor should say so rather than claiming `1280w`.
 2. Demote the current featured event into a new `<li class="edition">`
    row at the top of the log, keeping its photos, write-up and facts.
-   Remove its `edition--latest` class and give it a `<details>` wrapper.
+   Remove its `edition--latest` class and give it a `<details open>` wrapper
+   (past events show expanded; visitors can still collapse them).
 3. Put the new event in the feature slot and mark its log row
    `edition--latest`.
 4. Update the count on that programme's card in `index.html` (`#work`).
