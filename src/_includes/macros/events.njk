@@ -1,0 +1,213 @@
+{#- Event building blocks shared by the programme pages. Import with
+    {% import "macros/events.njk" as ev with context %}. The data they
+    render comes from src/_data/<programme>.js. -#}
+
+{#- Auto-advancing photo gallery. One photo renders without dots. -#}
+{% macro gallery(photos, sizes, indent = "") %}
+{{ indent }}<div class="gallery" data-gallery>
+{{ indent }}  <div class="gallery__track">
+{%- for p in photos.items %}
+{{ indent }}    <figure class="gallery__slide"><img src="{{ p.src }}" srcset="{{ p.srcset }}" sizes="{{ sizes }}" alt="{{ p.alt }}" loading="lazy" /></figure>
+{%- endfor %}
+{{ indent }}  </div>
+{%- if photos.items.length > 1 %}
+{{ indent }}  <span class="gallery__scrim" aria-hidden="true"></span>
+{{ indent }}  <div class="gallery__dots" role="group" aria-label="{{ photos.label }}">
+{%- for p in photos.items %}
+{{ indent }}    <button class="gallery__dot{% if loop.first %} is-active{% endif %}" type="button" aria-label="Show photo {{ loop.index }} of {{ loop.length }}"><span class="gallery__dot-fill"></span></button>
+{%- endfor %}
+{{ indent }}  </div>
+{%- endif %}
+{{ indent }}</div>
+{%- endmacro %}
+
+{#- Facts list: [["Where", "…"], …]. -#}
+{% macro facts(list, cls) %}
+<ul class="{{ cls }}">
+{%- for f in list %}
+  <li>
+    <span class="initiative__fact-k">{{ f[0] }}</span>
+    <span class="initiative__fact-v">{{ f[1] | safe }}</span>
+  </li>
+{%- endfor %}
+</ul>
+{%- endmacro %}
+
+{#- The latest event, shown in full: gallery beside the write-up.
+    `heading` is h2 when the feature opens its section, h3 when a section
+    heading sits above it. -#}
+{% macro feature(e, label, flip = false, heading = "h2") %}
+          <div class="initiative{% if flip %} initiative--flip{% endif %}">
+            <div class="initiative__media">
+{{ gallery(e.photos, "(max-width: 900px) 92vw, 600px", "              ") }}
+            </div>
+            <div class="initiative__copy">
+              <p class="comment-eyebrow">// {{ label }} — {{ e.tag or e.key }}</p>
+              <{{ heading }} class="display display--feature">
+                {{ e.title | safe }}
+              </{{ heading }}>
+              <p class="lead">
+                {{ e.lead | safe }}
+              </p>
+              {{ facts(e.facts, "initiative__facts") | indent(14) }}
+              {%- if e.note %}
+              <p class="initiative__note">
+                <a class="link" href="{{ e.note.href }}" target="_blank" rel="noopener">
+                  {{ e.note.label }}
+                  {% arrow "out", 14 %}
+                </a>
+              </p>
+              {%- endif %}
+            </div>
+          </div>
+{%- endmacro %}
+
+{#- Full run sheet + venue card for the latest meetup. -#}
+{% macro runSheet(e) %}
+{%- set KIND = { check: "check_in", talk: "talk", sponsor: "sponsor", break: "break", lab: "lab", close: "close" } %}
+          <p class="log-label log-label--recap">// run_sheet — {{ e.key }}</p>
+          <div class="recap">
+            <ol class="recap__agenda" aria-label="{{ e.key }} agenda">
+              {%- for row in e.runSheet %}
+              <li class="recap__row recap__row--{{ row.kind }}">
+                <span class="recap__time">{{ row.time }}</span>
+                <div class="recap__body">
+                  <p class="recap__type">// {{ KIND[row.kind] }}</p>
+                  <h3 class="recap__title">{{ row.title | safe }}</h3>
+                  {%- if row.by %}
+                  <p class="recap__by">{{ row.by | safe }}</p>
+                  {%- endif %}
+                  {%- if row.links.length == 1 %}
+                  <a class="recap__link" href="{{ row.links[0].href }}" target="_blank" rel="noopener">
+                    {{ row.links[0].label }}
+                    {% arrow "out", 13 %}
+                  </a>
+                  {%- elif row.links %}
+                  <div class="recap__repos">
+                    {%- for l in row.links %}
+                    <a class="recap__link" href="{{ l.href }}" target="_blank" rel="noopener">
+                      {{ l.label }}
+                      {% arrow "out", 13 %}
+                    </a>
+                    {%- endfor %}
+                  </div>
+                  {%- endif %}
+                </div>
+              </li>
+              {%- endfor %}
+            </ol>
+
+            <aside class="recap__meta" aria-label="Venue and partners">
+              {%- for b in e.recap %}
+              {%- if not loop.first %}
+
+              <div class="recap__meta-divider" aria-hidden="true"></div>
+              {%- endif %}
+
+              <div class="recap__meta-block">
+                <p class="recap__meta-eyebrow">// {{ b.eyebrow }}</p>
+                {%- if b.title %}
+                <p class="recap__meta-title">{{ b.title }}</p>
+                {%- endif %}
+                {%- if b.body %}
+                <p class="recap__meta-body">{{ b.body }}</p>
+                {%- endif %}
+                <a class="recap__meta-link{% if b.link.strong %} recap__meta-link--strong{% endif %}" href="{{ b.link.href }}" target="_blank" rel="noopener">
+                  {{ b.link.label }}
+                  {% arrow "out", 13 %}
+                </a>
+              </div>
+              {%- endfor %}
+            </aside>
+          </div>
+{%- endmacro %}
+
+{#- The log: the latest event as a marker row, then every earlier one
+    expanded (visitors can still collapse them). -#}
+{% macro log(events, label) %}
+          <div class="editions">
+            <p class="log-label">// {{ label }}</p>
+            <ol class="editions__list">
+              {%- for e in events %}
+              {%- if loop.first %}
+              <li class="edition edition--latest">
+                <div class="edition__summary">
+                  <span class="edition__row">
+                    <span class="edition__node" aria-hidden="true"></span>
+                    <span class="edition__head">
+                      <span class="edition__key">{{ e.key }}</span>
+                      <span class="edition__name">{{ e.name }}</span>
+                      <span class="edition__chip">latest</span>
+                    </span>
+                    <span class="edition__meta">{{ e.date | shortDate }}</span>
+                  </span>
+                </div>
+              </li>
+              {%- else %}
+
+              <li class="edition">
+                <details class="edition__box" open>
+                  <summary class="edition__summary">
+                    <span class="edition__row">
+                      <span class="edition__node" aria-hidden="true"></span>
+                      <span class="edition__head">
+                        <span class="edition__key">{{ e.key }}</span>
+                        <span class="edition__name">{{ e.name }}</span>
+                      </span>
+                      <span class="edition__meta">{{ e.date | shortDate }}</span>
+                      <span class="edition__chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </span>
+                    </span>
+                  </summary>
+                  <div class="edition__detail">
+                    <div class="edition__media">
+{{ gallery(e.photos, "(max-width: 1024px) 88vw, 500px", "                      ") }}
+                    </div>
+                    <div class="edition__text">
+                      <p>
+                        {{ (e.summary or e.lead) | safe }}
+                      </p>
+                      {{ facts(e.facts, "edition__facts") | indent(22) }}
+                    </div>
+                  </div>
+                </details>
+              </li>
+              {%- endif %}
+              {%- endfor %}
+            </ol>
+          </div>
+{%- endmacro %}
+
+{#- Programme page hero: headline, buttons, then the wide photo that opens
+    up on scroll. -#}
+{% macro hero(eyebrow, title, lead, img, alt, buttons) %}
+      <!-- ===========================================================
+           Page hero — headline, then the programme's photo, which opens
+           to full width as it scrolls in (CSS scroll timeline).
+           =========================================================== -->
+      <section class="page-hero" id="top">
+        <div class="container">
+          <p class="comment-eyebrow">{{ eyebrow }}</p>
+          <h1 class="page-hero__title">{{ title | safe }}</h1>
+          <p class="lead">
+            {{ lead | safe }}
+          </p>
+          <div class="hero__cta">
+            {%- for b in buttons %}
+            <a class="btn {{ 'btn--primary' if b.primary else 'btn--ghost' }}" href="{{ b.href }}"{% if not b.href.startsWith('#') and not b.href.startsWith('mailto') %} target="_blank" rel="noopener"{% endif %}>
+              <span>{{ b.label }}</span>
+              {%- if b.arrow !== false %}
+              {% arrow %}
+              {%- endif %}
+            </a>
+            {%- endfor %}
+          </div>
+        </div>
+        <div class="page-hero__stage">
+          <figure class="page-hero__media">
+            <img src="{{ img.src }}" srcset="{{ img.srcset }}" sizes="(max-width: 1320px) 94vw, 1240px" alt="{{ alt or img.alt }}" fetchpriority="high" />
+          </figure>
+        </div>
+      </section>
+{%- endmacro %}

@@ -5,8 +5,13 @@
   "observability": {
     "enabled": true
   },
+  // Eleventy builds the site into _site (see eleventy.config.js); Wrangler
+  // runs the build before every deploy, then serves only that folder.
+  "build": {
+    "command": "npm run build"
+  },
   "assets": {
-    "directory": "."
+    "directory": "./_site"
   },
   "compatibility_flags": [
     "nodejs_compat"

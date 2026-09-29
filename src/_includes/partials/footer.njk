@@ -1,0 +1,63 @@
+    <!-- =============================================================
+         Footer
+         ============================================================= -->
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <div class="site-footer__cluster">
+          <div class="site-footer__brand">
+            <img src="assets/SPLogo.png" alt="" width="52" height="52" />
+            <div>
+              <p class="site-footer__word">SwiftPune</p>
+              <p class="site-footer__tag">
+                <code>// runs on the enthusiasm of the community, good food &amp; beverages</code>
+              </p>
+            </div>
+          </div>
+
+          <nav class="site-footer__cols" aria-label="Footer">
+            <div class="footer-col">
+              <p class="footer-col__title">Show up</p>
+              <a href="{{ site.whatsapp }}" target="_blank" rel="noopener">WhatsApp group</a>
+              {%- for item in site.nav %}
+              <a href="{{ item.href }}">{{ item.mobile }}</a>
+              {%- endfor %}
+              <a href="/meetups#first-time">First-time visit</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Contribute</p>
+              <a href="mailto:{{ site.email }}?subject=I%27d%20like%20to%20speak">Pitch a talk</a>
+              <a href="mailto:{{ site.email }}?subject=Host%20SwiftPune%20at%20our%20company">Host SwiftPune</a>
+              <a href="mailto:{{ site.email }}">Email us</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Follow</p>
+              <a href="{{ site.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="{{ site.youtube }}" target="_blank" rel="noopener">YouTube</a>
+              <a href="{{ site.instagram }}" target="_blank" rel="noopener">Instagram</a>
+              <a href="{{ site.x }}" target="_blank" rel="noopener">X (Twitter)</a>
+              <a href="{{ site.mastodon }}" target="_blank" rel="noopener">Mastodon</a>
+            </div>
+            <div class="footer-col">
+              <p class="footer-col__title">Care</p>
+              <a href="/code-of-conduct">Code of conduct</a>
+              <a href="mailto:{{ site.email }}?subject=Reporting%20a%20concern">Report a concern</a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="site-footer__legal">
+          <p class="site-footer__trademark">
+            Apple, the Apple logo, Swift, the Swift logo, SwiftUI, iOS, iPadOS,
+            macOS, watchOS, visionOS and WWDC are trademarks of Apple Inc.,
+            registered in the U.S. and other countries. SwiftPune is an
+            independent, community-run group and is not affiliated with,
+            endorsed by, or sponsored by Apple Inc.
+          </p>
+          <p class="site-footer__copyline">
+            <code>
+              // © <span id="year">2026</span> SwiftPune · made in Pune · IST (UTC&nbsp;+5:30)
+            </code>
+          </p>
+        </div>
+      </div>
+    </footer>

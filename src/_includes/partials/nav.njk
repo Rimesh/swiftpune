@@ -1,0 +1,54 @@
+    <!-- ===========================================================
+         Site nav — the same on every page; aria-current marks where
+         the visitor is. Pages are listed in src/_data/site.js.
+         =========================================================== -->
+    <header class="site-nav" id="siteNav" aria-label="Primary">
+      <div class="site-nav__inner">
+        <a class="brand" href="/" aria-label="SwiftPune home">
+          <span class="brand__mark">
+            <img src="assets/SPLogo.png" alt="" width="40" height="40" />
+          </span>
+          <span class="brand__word">
+            <span>SwiftPune</span>
+            <span class="brand__meta">v.2026 · Pune, IN</span>
+          </span>
+        </a>
+
+        <nav class="site-nav__links" aria-label="Sections">
+          {%- for item in site.nav %}
+          <a href="{{ item.href }}"{% if nav == item.key %} aria-current="page"{% endif %}>{{ item.label }}</a>
+          {%- endfor %}
+          <a href="/#core-team">Core team</a>
+          <a href="{{ site.whatsapp }}" target="_blank" rel="noopener" class="nav-cta">
+            Join WhatsApp
+            {% arrow "out", 14, 2.5 %}
+          </a>
+        </nav>
+
+        <button
+          class="site-nav__toggle"
+          id="navToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu" hidden>
+        <nav aria-label="Mobile sections">
+          <a href="/"{% if nav == "home" %} aria-current="page"{% endif %}>Home</a>
+          {%- for item in site.nav %}
+          <a href="{{ item.href }}"{% if nav == item.key %} aria-current="page"{% endif %}>{{ item.mobile }}</a>
+          {%- endfor %}
+          <a href="/#core-team">Core team</a>
+          <a href="/#sponsors">Sponsors</a>
+          {%- if connect !== false %}
+          <a href="#connect">Connect with us</a>
+          {%- endif %}
+          <a href="{{ site.whatsapp }}" target="_blank" rel="noopener">WhatsApp group ↗</a>
+        </nav>
+      </div>
+    </header>

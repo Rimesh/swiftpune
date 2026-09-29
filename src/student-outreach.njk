@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+permalink: student-outreach.html
+nav: outreach
+title: Student outreach — SwiftPune
+description: "SwiftPune's Swift Student Outreach: we run sessions on Swift and SwiftUI inside Pune's colleges and universities, for students who haven't opened Xcode yet."
+ogImage: assets/Events/student-outreach/bharati-vidyapeeth-2026/01.jpg
+---
+{#- Sessions live in src/_data/outreach.js — add a session there, not here. -#}
+{%- import "macros/events.njk" as ev with context %}
+{%- set latest = outreach.events[0] %}
+{{ ev.hero(
+  "// program.student_outreach",
+  'Swift, taken to <span class="ink">campus</span>.',
+  "Most students won't travel across the city for a weekend
+            meetup, so we go to them instead. Faculty book the hall, we
+            bring the people who build on Apple's platforms for a living,
+            and the session runs for whoever turns up — mostly people who
+            haven't opened Xcode yet.",
+  latest.photos.items[1] or latest.photos.items[0],
+  null,
+  [
+    { href: site.forms.campus, label: "Bring SwiftPune to your campus", primary: true },
+    { href: site.whatsapp, label: "Join the WhatsApp group", arrow: false }
+  ]
+) }}
+
+      <!-- ===========================================================
+           Swift Student Outreach — latest session, then every session.
+           =========================================================== -->
+      <section class="section section--program section--outreach reveal" id="outreach">
+        <div class="container">
+{{ ev.feature(latest, outreach.latestLabel, true) }}
+
+{{ ev.log(outreach.events, outreach.logLabel) }}
+        </div>
+      </section>

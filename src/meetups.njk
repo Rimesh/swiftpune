@@ -1,0 +1,131 @@
+---
+layout: layouts/base.njk
+permalink: meetups.html
+nav: meetups
+title: Meetups — SwiftPune
+description: "SwiftPune meetups: half a weekend morning at a Pune company's office, with three 20-minute talks and a hands-on lab for people already shipping on Apple's platforms. Free, and every talk is recorded."
+ogImage: assets/Events/S002/01.jpeg
+---
+{#- Events live in src/_data/meetups.js — add a meetup there, not here. -#}
+{%- import "macros/events.njk" as ev with context %}
+{%- set latest = meetups.events[0] %}
+{{ ev.hero(
+  "// program.meetups",
+  'Meetups, hosted by <span class="ink">Pune companies</span>.',
+  "Half a weekend morning at a host company's office: three 20-minute
+            talks, a break with real food, and a hands-on lab to close.
+            Pitched at people already shipping on Apple's platforms. Free
+            to attend, and every talk goes up on YouTube afterwards.",
+  latest.photos.items[1] or latest.photos.items[0],
+  null,
+  [
+    { href: site.whatsapp, label: "Get pinged on WhatsApp", primary: true },
+    { href: site.youtube, label: "Watch the talks" }
+  ]
+) }}
+
+      <!-- ===========================================================
+           Meetups — latest edition, its run sheet, then every edition.
+           =========================================================== -->
+      <section class="section section--program section--meetups reveal" id="meetups">
+        <div class="container">
+{{ ev.feature(latest, meetups.latestLabel) }}
+{%- if latest.runSheet %}
+
+{{ ev.runSheet(latest) }}
+{%- endif %}
+
+{{ ev.log(meetups.events, meetups.logLabel) }}
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           How to actually turn up
+           =========================================================== -->
+      <section class="section section--attend reveal" id="attend">
+        <div class="container">
+          <div class="attend">
+            <p class="comment-eyebrow">// meetup()</p>
+            <h2 class="display">
+              Find us on a <span class="ink">weekend</span>.
+            </h2>
+            <p class="lead">
+              Each meetup lands on LinkedIn and Luma a couple of weeks
+              ahead. The fastest heads-up is the WhatsApp group — that's
+              where times, venues, and RSVPs drop first. A meetup runs
+              about three hours{% if latest.runSheet %}, much like the {{ latest.key }} run sheet above{% endif %}.
+            </p>
+            <div class="meetups__cta">
+              <a class="btn btn--primary" href="{{ site.whatsapp }}" target="_blank" rel="noopener">
+                <span>Get pinged on WhatsApp</span>
+                {% arrow %}
+              </a>
+              <a class="btn btn--ghost" href="mailto:{{ site.email }}?subject=Host%20SwiftPune%20at%20our%20company">
+                <span>Host a meetup at your company</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           First time? — onboarding for newer/younger devs
+           =========================================================== -->
+      <section class="section section--first reveal" id="first-time">
+        <span class="bubble bubble--accent bubble--first" aria-hidden="true"></span>
+        <div class="container container--narrow">
+          <header class="section-head">
+            <p class="comment-eyebrow">// first.commit</p>
+            <h2 class="display">
+              Coming for the <span class="ink">first time</span>?
+            </h2>
+            <p class="lead">
+              Two minutes of reading. Three things to know before you walk in
+              — in the order they'll happen.
+            </p>
+          </header>
+
+          <ol class="onboard" aria-label="What to know on your first visit">
+            <li class="onboard__step">
+              <div class="onboard__rail" aria-hidden="true">
+                <span class="onboard__num">01</span>
+              </div>
+              <div class="onboard__body">
+                <p class="onboard__eyebrow">// pack</p>
+                <h3 class="onboard__title">Bring a laptop, your questions, an opinion.</h3>
+                <p class="onboard__text">
+                  The opinion is the important one. Even a wrong one starts a
+                  better conversation than no opinion.
+                </p>
+              </div>
+            </li>
+
+            <li class="onboard__step">
+              <div class="onboard__rail" aria-hidden="true">
+                <span class="onboard__num">02</span>
+              </div>
+              <div class="onboard__body">
+                <p class="onboard__eyebrow">// wear</p>
+                <h3 class="onboard__title">Whatever you'd wear to work or to a college fest.</h3>
+                <p class="onboard__text">
+                  Both fit. We're not a uniform crowd.
+                </p>
+              </div>
+            </li>
+
+            <li class="onboard__step">
+              <div class="onboard__rail" aria-hidden="true">
+                <span class="onboard__num">03</span>
+              </div>
+              <div class="onboard__body">
+                <p class="onboard__eyebrow">// hello round</p>
+                <h3 class="onboard__title">We open with introductions.</h3>
+                <p class="onboard__text">
+                  Name, what you build (or want to build), one thing you're
+                  stuck on this week. Nobody's a stranger by talk #1.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>

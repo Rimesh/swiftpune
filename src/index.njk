@@ -1,0 +1,252 @@
+---
+layout: layouts/base.njk
+permalink: index.html
+nav: home
+title: SwiftPune — An Apple platforms community in Pune
+description: SwiftPune is a Pune-grown community of Apple-platform engineers, designers, and students — iOS, macOS, visionOS, and server-side Swift. Meetups, campus outreach, and community nights.
+ogDescription: A Pune-grown community of Apple-platform engineers, designers, and students. Meetups, campus outreach, and community nights.
+ogAlt: SwiftPune — an Apple platforms community in Pune
+---
+{#- Programme cards read from src/_data/{meetups,outreach,casuals}.js, so
+    counts and "latest" dates update when an event is added there. -#}
+{%- set programmes = [
+  { data: meetups, href: "/meetups" },
+  { data: outreach, href: "/student-outreach" },
+  { data: casuals, href: "/casuals" }
+] %}
+{%- set hosts = meetups.events | reverse %}
+{%- set countWord = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"][hosts.length] or hosts.length %}
+      <!-- ===========================================================
+           Hero — logo centerpiece + tech-coded headline + CTAs
+           =========================================================== -->
+      <section class="hero" id="top">
+        <!-- Soft bubble blob behind the logo (decorative) -->
+        <span class="hero__blob hero__blob--accent" aria-hidden="true"></span>
+        <span class="hero__blob hero__blob--teal" aria-hidden="true"></span>
+
+        <div class="hero__grid">
+          <div class="hero__mark">
+            <div class="hero__logo-wrap">
+              <img
+                class="hero__logo"
+                src="assets/SPLogo.png"
+                alt="SwiftPune"
+                width="680"
+                height="680"
+              />
+            </div>
+          </div>
+
+          <div class="hero__copy">
+            <p class="comment-eyebrow">// Apple-platform devs · Pune · est. 2025</p>
+            <h1 class="hero__title">
+              An Apple platforms <span class="ink">community</span>.
+            </h1>
+            <p class="hero__sub">
+              A Pune-grown community of Apple-platform engineers, designers,
+              and students, meeting to learn together, share what we know, and
+              grow the next generation of Apple-platform builders in the city.
+            </p>
+            <div class="hero__cta">
+              <a class="btn btn--primary" href="{{ site.whatsapp }}" target="_blank" rel="noopener">
+                <span>Join the WhatsApp group</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+              <a class="btn btn--ghost" href="{{ site.linkedin }}" target="_blank" rel="noopener">
+                <span>Follow on LinkedIn</span>
+              </a>
+            </div>
+            <ul class="hero__meta" aria-label="At a glance">
+              <li><strong>Quarterly</strong> meetups</li>
+              <li><strong>Campus</strong> sessions</li>
+              <li><strong>Monthly</strong> casuals</li>
+              <li><strong>No</strong> experience bar</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Our work — the three programmes we run, on repeat.
+           -----------------------------------------------------------
+           This row is deliberately FIXED at three cards: one per
+           programme, not one per event. Each card opens that
+           programme's own page, where every event is logged, so the
+           homepage never turns into a wall of tiles. The count and
+           "latest" line on each card come from the programme's data
+           file, so adding an event there updates the card too.
+           =========================================================== -->
+      <section class="section section--work reveal" id="work">
+        <div class="container">
+          <header class="section-head">
+            <p class="comment-eyebrow">// ls ./programs</p>
+            <h2 class="display">
+              Less talk. Here's the <span class="ink">work</span>.
+            </h2>
+            <p class="lead">
+              No roadmap theatre, no vague mission statements — three
+              things we run on repeat, each with the full log of every
+              one we've actually held. Talks for working developers,
+              Swift taken onto campuses, and a monthly brunch where
+              nobody gives a talk at all.
+            </p>
+          </header>
+
+          <div class="work-grid work-grid--programs">
+            {%- for p in programmes %}
+            {%- set c = p.data.card %}
+            {%- set n = p.data.events.length %}
+            <article class="work-card work-card--tall reveal-up" style="--i:{{ loop.index0 }}">
+              <a class="work-card__link" href="{{ p.href }}">
+                <span class="work-card__media work-card__media--{{ c.media }}">
+                  <img src="{{ c.image.src }}" srcset="{{ c.image.srcset }}" sizes="(max-width: 720px) 92vw, 360px" alt="{{ c.image.alt }}" loading="lazy" />
+                </span>
+                <span class="work-card__body">
+                  <span class="work-card__tag work-card__tag--{{ c.tagClass }}">{{ c.tag }}</span>
+                  <span class="work-card__title">{{ c.title }}</span>
+                  <span class="work-card__desc">
+                    {{ c.desc }}
+                  </span>
+                  <span class="work-card__meta"><strong>{{ n }} {{ c.unit[0] if n == 1 else c.unit[1] }}</strong> · latest {{ p.data.events[0].date | monthYear }}</span>
+                  <span class="work-card__cta">
+                    {{ c.cta }}
+                    {% arrow "next", 15 %}
+                  </span>
+                </span>
+              </a>
+            </article>
+            {%- endfor %}
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Core team — the seven who keep this going
+           =========================================================== -->
+      <section class="section section--team reveal" id="core-team">
+        <div class="container">
+          <header class="section-head section-head--center">
+            <p class="comment-eyebrow">// core_team</p>
+            <h2 class="display">
+              The <span class="ink">core team</span>.
+            </h2>
+            <p class="lead">
+              No titles between us, no permanent assignments. Different
+              companies, different specialties, one shared instinct:
+              whoever has a free weekend grabs whatever the next meetup
+              needs, then hands it back when it's done. This month's
+              venue scout is next month's name-tag printer. Who's bringing
+              the projector adapter is, as always, a separate conversation.
+            </p>
+          </header>
+
+          <div class="crew" role="list" aria-label="Core team members">
+            <a class="crew__member" href="https://www.linkedin.com/in/recursiveswift/" target="_blank" rel="noopener" role="listitem">
+              <span class="crew__photo crew__photo--violet" aria-hidden="true"><img src="assets/CoreTeam/RimeshJotaniya.png" alt="" loading="lazy"></span>
+              <span class="crew__name">Rimesh Jotaniya</span>
+            </a>
+            <a class="crew__member" href="https://www.linkedin.com/in/abhishekshinde1/" target="_blank" rel="noopener" role="listitem">
+              <span class="crew__photo crew__photo--coral" aria-hidden="true"><img src="assets/CoreTeam/abhishek-shinde.jpeg" alt="" loading="lazy"></span>
+              <span class="crew__name">Abhishek Shinde</span>
+            </a>
+            <a class="crew__member" href="https://www.linkedin.com/in/dezinezync/" target="_blank" rel="noopener" role="listitem">
+              <span class="crew__photo crew__photo--orange" aria-hidden="true"><img src="assets/CoreTeam/nikhil-nigade.jpeg" alt="" loading="lazy"></span>
+              <span class="crew__name">Nikhil Nigade</span>
+            </a>
+            <a class="crew__member" href="https://www.linkedin.com/in/divya-maloo-72629284/" target="_blank" rel="noopener" role="listitem">
+              <span class="crew__photo crew__photo--teal" aria-hidden="true"><img src="assets/CoreTeam/divya-maloo.jpeg" alt="" loading="lazy" style="transform: scale(2.3); transform-origin: 46% 6%;"></span>
+              <span class="crew__name">Divya Maloo</span>
+            </a>
+            <a class="crew__member" href="https://www.linkedin.com/in/swetal-matkar-73a836204/" target="_blank" rel="noopener" role="listitem">
+              <span class="crew__photo crew__photo--green" aria-hidden="true"><img src="assets/CoreTeam/swetal-matkar.jpeg" alt="" loading="lazy"></span>
+              <span class="crew__name">Swetal Matkar</span>
+            </a>
+            <a class="crew__member" href="https://www.linkedin.com/in/ganesh-patil-2b3431119/" target="_blank" rel="noopener" role="listitem">
+              <span class="crew__photo crew__photo--coral" aria-hidden="true"><img src="assets/CoreTeam/ganesh-patil.jpeg" alt="" loading="lazy"></span>
+              <span class="crew__name">Ganesh Patil</span>
+            </a>
+            <a class="crew__member" href="https://www.linkedin.com/in/msusare/" target="_blank" rel="noopener" role="listitem">
+              <span class="crew__photo crew__photo--blue" aria-hidden="true"><img src="assets/CoreTeam/mayur-susare.jpeg" alt="" loading="lazy"></span>
+              <span class="crew__name">Mayur Susare</span>
+            </a>
+          </div>
+
+          <p class="team__cta">
+            Speaking is the fastest path to knowing everyone.
+            <a class="link" href="{{ site.forms.pitchTalk }}" target="_blank" rel="noopener">
+              Pitch a talk via this form
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Sponsors — how it works
+           =========================================================== -->
+      <section class="section section--sponsors reveal" id="sponsors">
+        <div class="container">
+          <header class="section-head section-head--center">
+            <p class="comment-eyebrow">// sponsors</p>
+            <h2 class="display">
+              Supported by people who <span class="ink">care</span>.
+            </h2>
+            <p class="lead">
+              Venues, food, name tags, the small AV bits — every meetup
+              runs on someone's generosity. Hosts and sponsors get a stage
+              minute at the event they back and a real thank-you from the
+              room. {{ countWord }} {{ "company has" if hosts.length == 1 else "companies have" }} made it possible so far; the next
+              slot should be yours.
+            </p>
+          </header>
+
+          <aside class="sponsors-note" aria-label="A note from the SwiftPune crew">
+            <header class="sponsors-note__head" aria-hidden="true">
+              <span class="sponsors-note__file">notes/to_future_hosts.swift</span>
+            </header>
+            <div class="sponsors-note__body">
+              <p class="sponsors-note__line">A meetup needs almost nothing — a room for 75,</p>
+              <p class="sponsors-note__line">a projector, a few pots of coffee, three hours</p>
+              <p class="sponsors-note__line">of a weekend morning. We can't really sell</p>
+              <p class="sponsors-note__line">anyone on this. There's nothing to buy.</p>
+              <p class="sponsors-note__line sponsors-note__line--blank"></p>
+              <p class="sponsors-note__line">Past hosts have offered what they already had:</p>
+              <p class="sponsors-note__line">the conference room that was empty that morning,</p>
+              <p class="sponsors-note__line">the coffee budget no one was watching. The</p>
+              <p class="sponsors-note__line">talks were ours; the chairs were theirs.</p>
+              <p class="sponsors-note__line">That was the whole deal.</p>
+              <p class="sponsors-note__line sponsors-note__line--blank"></p>
+              <p class="sponsors-note__line">If you'd like to make a morning happen, write</p>
+              <p class="sponsors-note__line">to us. We'll shape it around whatever you can</p>
+              <p class="sponsors-note__line">offer. No tier list. No deck. No ask beyond</p>
+              <p class="sponsors-note__line">the room.</p>
+              <p class="sponsors-note__line sponsors-note__line--blank"></p>
+              <p class="sponsors-note__line sponsors-note__line--sign">— the SwiftPune crew</p>
+              <p class="sponsors-note__line"><a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+            </div>
+          </aside>
+
+          <div class="hosts-log" aria-label="Hosts so far">
+            <p class="hosts-log__eyebrow">// hosts.history</p>
+            <ol class="hosts-log__list">
+              {%- for e in hosts %}
+              <li class="hosts-log__item">
+                <span class="hosts-log__sid">{{ e.key }}</span>
+                <span class="hosts-log__name">{{ e.host }}</span>
+              </li>
+              {%- endfor %}
+              <li class="hosts-log__item hosts-log__item--open">
+                <span class="hosts-log__sid">{{ meetups.events[0].key | nextKey }}</span>
+                <span class="hosts-log__name">your company?</span>
+              </li>
+            </ol>
+          </div>
+
+          <p class="sponsors__cta">
+            <a class="btn btn--primary" href="mailto:{{ site.email }}?subject=Host%20SwiftPune%20at%20our%20company">
+              <span>Host SwiftPune at your company</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </p>
+        </div>
+      </section>
