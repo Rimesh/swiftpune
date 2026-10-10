@@ -21,6 +21,7 @@ export default {
     { key: "meetups", href: "/meetups", label: "Meetups", mobile: "Meetups" },
     { key: "outreach", href: "/student-outreach", label: "Students", mobile: "Student outreach" },
     { key: "casuals", href: "/casuals", label: "Casuals", mobile: "Casuals" },
+    { key: "openhour", href: "/open-hour", label: "Open Hour", mobile: "Open Hour" },
   ],
 
   // The follow-along channels in the Connect block, after the WhatsApp tile.

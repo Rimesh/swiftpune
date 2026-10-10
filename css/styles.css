@@ -473,16 +473,19 @@ a { color: inherit; text-decoration: none; }
   margin-top: var(--s-8);
 }
 
-/* The programme row is a fixed three-up that never grows with the event
-   count. auto-fit reflows it to 2+1 then 1 on its own, so it needs no
-   breakpoint of its own — and it would absorb a fourth programme if one
-   ever appears. Doubled class keeps it ahead of the .work-grid rules in
-   the media queries at the bottom of this file. */
-.work-grid.work-grid--programs {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 265px), 1fr));
+/* The programme row is one card per programme and never grows with the
+   event count: four across, then 2+2, then one column — never a lone
+   card on a row of its own. Doubled class keeps it ahead of the
+   .work-grid rules in the media queries at the bottom of this file. */
+.work-grid.work-grid--programs { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) {
+  .work-grid.work-grid--programs { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .work-grid.work-grid--programs { grid-template-columns: 1fr; }
 }
 .work-grid--programs .work-card--tall { grid-column: auto; }
-/* Fixed-ratio media so all three photos line up regardless of how long
+/* Fixed-ratio media so every programme photo lines up regardless of how long
    each blurb runs; the count line and CTA then sit on a shared baseline
    at the bottom of every card. */
 .work-grid--programs .work-card--tall .work-card__media {
@@ -1870,7 +1873,16 @@ a { color: inherit; text-decoration: none; }
 }
 .work-card__tag--casual { color: var(--violet-text); background: #E6DEFA; }
 
-/* Casuals: the house rules, four plain statements across one row. */
+/* Open Hour runs on the blue rail. */
+.section--openhour .editions {
+  --edition-dot:  var(--bubble-blue);
+  --edition-ink:  var(--blue-text);
+  --edition-tint: var(--bubble-blue-tint);
+}
+.section--openhour .habits__key { color: var(--blue-text); }
+.work-card__tag--openhour { color: var(--blue-text); background: var(--bubble-blue-tint); }
+
+/* Casuals and Open Hour: the house rules, plain statements across one row. */
 .habits {
   list-style: none;
   padding: 0;
@@ -1879,6 +1891,7 @@ a { color: inherit; text-decoration: none; }
   grid-template-columns: repeat(4, 1fr);
   gap: var(--s-6);
 }
+.habits--three { grid-template-columns: repeat(3, 1fr); }
 .habits__item {
   padding-top: var(--s-5);
   border-top: 2px solid var(--ink);
