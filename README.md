@@ -15,7 +15,8 @@ This is the source for the **SwiftPune** website — a small, fast, static site 
 volunteer-run community of people who build on Apple's platforms (iOS, macOS,
 visionOS, and server-side Swift) in Pune, India.
 
-It leads with our actual work — meetups, campus outreach, and casuals —
+It leads with our actual work — meetups, campus outreach, casuals and
+Open Hour —
 rather than mission statements.
 
 ## Working on the site
@@ -25,13 +26,14 @@ templates in `src/`, and everything that repeats lives in one place:
 
 | To change… | Edit |
 | --- | --- |
-| A meetup, campus session, casual or watch party | `src/_data/meetups.js`, `outreach.js` or `casuals.js` |
+| A meetup, campus session, casual, watch party or open hour | `src/_data/meetups.js`, `outreach.js`, `casuals.js` or `openhour.js` |
 | Links (WhatsApp, socials, email, forms) or the nav | `src/_data/site.js` |
 | Nav, Connect block or footer markup | `src/_includes/partials/` |
 | The `<head>` and page shell | `src/_includes/layouts/base.njk` |
 | How events render (gallery, feature, log, run sheet) | `src/_includes/macros/events.njk` |
-| Page copy | `src/index.njk`, `meetups.njk`, `student-outreach.njk`, `casuals.njk`, `code-of-conduct.njk` |
+| Page copy | `src/index.njk`, `meetups.njk`, `student-outreach.njk`, `casuals.njk`, `open-hour.njk`, `code-of-conduct.njk` |
 | Styles, scripts, images | `css/`, `js/`, `assets/` (copied as-is) |
+| `sitemap.xml` / `robots.txt` | `src/sitemap.njk`, `src/robots.njk` — every page is listed automatically |
 
 ```sh
 npm install
@@ -39,7 +41,7 @@ npm start        # http://localhost:8080, rebuilds on save
 npm run build    # writes the site to _site/
 ```
 
-`/meetups`, `/student-outreach` and `/casuals` are served from
+`/meetups`, `/student-outreach`, `/casuals` and `/open-hour` are served from
 `meetups.html` etc. — by Cloudflare in production and by the dev server
 locally. Cloudflare runs `npm run build` on every deploy (see
 `wrangler.jsonc`) and serves `_site/`.
@@ -55,6 +57,7 @@ one. Both come from that programme's data file, newest first:
 | Swift Student Outreach | `src/_data/outreach.js` | `assets/Events/student-outreach/<campus-slug>/` |
 | Casuals | `src/_data/casuals.js` (`events`) | `assets/Events/Casuals/00N/` |
 | WWDC watch party | `src/_data/casuals.js` (`annual`) | `assets/Events/watchparty/<year>/` |
+| Open Hour | `src/_data/openhour.js` | `assets/Events/OpenHour/00N/` |
 
 1. Drop up to three photos in that programme's folder as `01`, `02`, `03`,
    then size them. Originals cap at 1280px wide, with `-1024` and `-640`

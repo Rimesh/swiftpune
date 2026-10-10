@@ -7,12 +7,13 @@ description: SwiftPune is a Pune-grown community of Apple-platform engineers, de
 ogDescription: A Pune-grown community of Apple-platform engineers, designers, and students. Meetups, campus outreach, and community nights.
 ogAlt: SwiftPune — an Apple platforms community in Pune
 ---
-{#- Programme cards read from src/_data/{meetups,outreach,casuals}.js, so
+{#- Programme cards read from src/_data/{meetups,outreach,casuals,openhour}.js, so
     counts and "latest" dates update when an event is added there. -#}
 {%- set programmes = [
   { data: meetups, href: "/meetups" },
   { data: outreach, href: "/student-outreach" },
-  { data: casuals, href: "/casuals" }
+  { data: casuals, href: "/casuals" },
+  { data: openhour, href: "/open-hour" }
 ] %}
 {%- set hosts = meetups.events | reverse %}
 {%- set countWord = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"][hosts.length] or hosts.length %}
@@ -67,9 +68,9 @@ ogAlt: SwiftPune — an Apple platforms community in Pune
       </section>
 
       <!-- ===========================================================
-           Our work — the three programmes we run, on repeat.
+           Our work — the four programmes we run, on repeat.
            -----------------------------------------------------------
-           This row is deliberately FIXED at three cards: one per
+           This row is deliberately FIXED at one card per
            programme, not one per event. Each card opens that
            programme's own page, where every event is logged, so the
            homepage never turns into a wall of tiles. The count and
@@ -84,11 +85,11 @@ ogAlt: SwiftPune — an Apple platforms community in Pune
               Less talk. Here's the <span class="ink">work</span>.
             </h2>
             <p class="lead">
-              No roadmap theatre, no vague mission statements — three
+              No roadmap theatre, no vague mission statements — four
               things we run on repeat, each with the full log of every
               one we've actually held. Talks for working developers,
-              Swift taken onto campuses, and a monthly brunch where
-              nobody gives a talk at all.
+              Swift taken onto campuses, a monthly brunch where nobody
+              gives a talk at all, and an online hour on one topic.
             </p>
           </header>
 

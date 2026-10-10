@@ -14,6 +14,7 @@ export default {
   forms: {
     pitchTalk: "https://forms.gle/r2qK6PbT3RxkErJm9",
     campus: "https://forms.gle/CeZP6YjRmobC9hE4A",
+    openHourTopic: "https://forms.gle/BQ1RxPA1hUG9RBzH9",
   },
 
   // Top-level pages, in nav order. `key` matches each page's `nav` front matter.
@@ -21,6 +22,7 @@ export default {
     { key: "meetups", href: "/meetups", label: "Meetups", mobile: "Meetups" },
     { key: "outreach", href: "/student-outreach", label: "Students", mobile: "Student outreach" },
     { key: "casuals", href: "/casuals", label: "Casuals", mobile: "Casuals" },
+    { key: "openhour", href: "/open-hour", label: "Open Hour", mobile: "Open Hour" },
   ],
 
   // The follow-along channels in the Connect block, after the WhatsApp tile.

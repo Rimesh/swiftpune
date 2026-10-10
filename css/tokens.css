@@ -46,6 +46,7 @@
   --accent-text: #B02845;
   --green-text:  #4A6E14;
   --violet-text: #6944C4;
+  --blue-text:   #3553B8;
 
   /* ----- Roles --------------------------------------------------------- */
   --text-strong: var(--ink);

@@ -1,0 +1,63 @@
+---
+layout: layouts/base.njk
+permalink: open-hour.html
+nav: openhour
+title: Open Hour — SwiftPune
+description: "SwiftPune Open Hour: an online session on one topic. Someone leads the conversation, then it's open Q&A and a chance to meet other community members."
+ogImage: assets/Events/OpenHour/001/01.jpg
+habits:
+  - key: "// where"
+    title: Online, on a video call.
+    text: Join from wherever you are. The link goes up in the WhatsApp group before each session.
+  - key: "// format"
+    title: One topic, then questions.
+    text: Someone from the community leads a conversation on a single topic, then the floor is open for Q&A.
+  - key: "// who"
+    title: The whole community.
+    text: Working developers, designers, students, the curious. A way to meet people in the community without leaving home.
+---
+{#- Sessions live in src/_data/openhour.js — add a session there, not here. -#}
+{%- import "macros/events.njk" as ev with context %}
+{%- set latest = openhour.events[0] %}
+{{ ev.hero(
+  "// program.open_hour",
+  'One topic. One <span class="ink">hour</span>. Online.',
+  "Not everything needs a room. Open Hour is a video call around a
+            single topic: someone who knows it well leads the conversation,
+            then it's questions from everyone on the call, and a chance to
+            meet other people in the community.",
+  latest.photos.items[0],
+  null,
+  [
+    { href: site.whatsapp, label: "Join the next one on WhatsApp", primary: true },
+    { href: site.forms.openHourTopic, label: "Suggest a topic", arrow: false }
+  ]
+) }}
+
+      <!-- ===========================================================
+           How an open hour works
+           =========================================================== -->
+      <section class="section section--program section--openhour reveal" id="how">
+        <div class="container">
+          <ul class="habits habits--three" aria-label="How an open hour works">
+            {%- for h in habits %}
+            <li class="habits__item">
+              <p class="habits__key">{{ h.key }}</p>
+              <h2 class="habits__title">{{ h.title }}</h2>
+              <p class="habits__text">{{ h.text }}</p>
+            </li>
+            {%- endfor %}
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===========================================================
+           Open Hour — latest session, then every session.
+           =========================================================== -->
+      <section class="section section--program section--openhour reveal" id="sessions">
+        <div class="container">
+{{ ev.feature(latest, openhour.latestLabel) }}
+
+{{ ev.log(openhour.events, openhour.logLabel) }}
+        </div>
+      </section>
