@@ -14,6 +14,7 @@ export default {
   forms: {
     pitchTalk: "https://forms.gle/r2qK6PbT3RxkErJm9",
     campus: "https://forms.gle/CeZP6YjRmobC9hE4A",
+    openHourTopic: "https://forms.gle/BQ1RxPA1hUG9RBzH9",
   },
 
   // Top-level pages, in nav order. `key` matches each page's `nav` front matter.
