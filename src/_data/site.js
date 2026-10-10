@@ -11,6 +11,10 @@ export default {
   x: "https://twitter.com/swiftpune",
   mastodon: "https://mastodon.social/@swiftpune",
 
+  // CommunityTalks — Swift community events across India, in one app.
+  // `ct=SwiftPuneWebsite` credits installs from this site in App Store Connect.
+  communityTalks: "https://apps.apple.com/app/apple-store/id6755958142?pt=127439708&ct=SwiftPuneWebsite&mt=8",
+
   forms: {
     pitchTalk: "https://forms.gle/r2qK6PbT3RxkErJm9",
     campus: "https://forms.gle/CeZP6YjRmobC9hE4A",
