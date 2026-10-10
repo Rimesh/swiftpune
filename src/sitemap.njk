@@ -1,0 +1,14 @@
+---
+permalink: sitemap.xml
+eleventyExcludeFromCollections: true
+---
+{#- Every page on the site, at the same URL as its canonical tag. Built
+    from the pages themselves, so a new page is listed automatically. -#}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for p in collections.all | sort(false, false, "url") %}
+  <url>
+    <loc>{{ site.url + (p.data.canonical or p.url | replace(".html", "")) }}</loc>
+  </url>
+{%- endfor %}
+</urlset>

@@ -33,6 +33,7 @@ templates in `src/`, and everything that repeats lives in one place:
 | How events render (gallery, feature, log, run sheet) | `src/_includes/macros/events.njk` |
 | Page copy | `src/index.njk`, `meetups.njk`, `student-outreach.njk`, `casuals.njk`, `open-hour.njk`, `code-of-conduct.njk` |
 | Styles, scripts, images | `css/`, `js/`, `assets/` (copied as-is) |
+| `sitemap.xml` / `robots.txt` | `src/sitemap.njk`, `src/robots.njk` — every page is listed automatically |
 
 ```sh
 npm install
